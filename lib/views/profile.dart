@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
 import 'dart:io';
 
 class Profile extends StatefulWidget {
@@ -14,30 +17,40 @@ class _ProfileState extends State<Profile> {
   File? _imageFile;
   final ImagePicker _picker = ImagePicker();
 
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedImage();
+  }
+
+  Future<void> _loadSavedImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedPath = prefs.getString('profile_image_path');
+    if (savedPath != null && File(savedPath).existsSync()) {
+      setState(() => _imageFile = File(savedPath));
+    }
+  }
+
   Future<void> _pickImage(ImageSource source) async {
     final permission = source == ImageSource.camera
         ? Permission.camera
         : Permission.photos;
+
+    // Check status FIRST — don't call .request() if permanently denied
     var status = await permission.status;
-    if (status.isGranted) {
-      final picked = await _picker.pickImage(source: source);
-      if (picked != null) setState(() => _imageFile = File(picked.path));
-    } else if (status.isDenied) {
-      if (await permission.request().isGranted) {
-        final picked = await _picker.pickImage(source: source);
-        if (picked != null) setState(() => _imageFile = File(picked.path));
-      }
-    } else if (status.isPermanentlyDenied) {
+
+    if (status.isPermanentlyDenied) {
+      if (!mounted) return;
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
           title: const Text('Permission Required'),
-          content: const Text('Please enable permission in app settings.'),
+          content: const Text('Please enable it in app settings.'),
           actions: [
             TextButton(
               onPressed: () {
-                openAppSettings();
                 Navigator.of(ctx).pop();
+                openAppSettings();
               },
               child: const Text('Open Settings'),
             ),
@@ -48,6 +61,38 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       );
+      return;
+    }
+
+    // Safe to call .request() here — will show the OS prompt if needed
+    status = await permission.request();
+
+    if (status.isGranted) {
+      final picked = await _picker.pickImage(source: source);
+      if (picked != null) {
+        // Copy to app documents directory for persistence
+        final appDir = await getApplicationDocumentsDirectory();
+
+        // Use a unique timestamp to break Flutter's ImageCache which caches by file path
+        final timestamp = DateTime.now().millisecondsSinceEpoch;
+        final fileName = 'profile_$timestamp${p.extension(picked.path)}';
+        final savedFile = await File(
+          picked.path,
+        ).copy('${appDir.path}/$fileName');
+
+        // Delete the old file to save space
+        if (_imageFile != null && _imageFile!.existsSync()) {
+          try {
+            _imageFile!.deleteSync();
+          } catch (_) {}
+        }
+
+        // Save the path to SharedPreferences
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('profile_image_path', savedFile.path);
+
+        setState(() => _imageFile = savedFile);
+      }
     }
   }
 
@@ -69,7 +114,7 @@ class _ProfileState extends State<Profile> {
                   : null,
             ),
             const SizedBox(height: 16),
-            Text('John Doe', style: Theme.of(context).textTheme.headline6),
+            Text('John Doe', style: Theme.of(context).textTheme.titleLarge),
             const Text('johndoe@email.com'),
             const SizedBox(height: 24),
             ElevatedButton.icon(

@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/widgets/header.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
+  State<Home> createState() => _HomeState();
+}
 
-      body: const Center(
+class _HomeState extends State<Home> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 30.0),
+      child: const Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Welcome to the Home Page!'),
-            SizedBox(height: 20),
-            Text('This is where you can find your content.'),
-          ],
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [Header()],
         ),
       ),
     );

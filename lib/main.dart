@@ -9,15 +9,19 @@ import 'package:shopping_app/widgets/navbar.dart';
 import 'package:shopping_app/views/deals.dart';
 import 'package:shopping_app/views/profile.dart';
 import 'package:shopping_app/views/shopping_cart.dart';
+import 'package:shopping_app/services/auth.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final loggedIn = await AuthService.isLoggedIn();
+  runApp(MyApp(isLoggedIn: loggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final GoRouter _router = GoRouter(
-    initialLocation: '/',
+  final bool isLoggedIn;
+  MyApp({super.key, required this.isLoggedIn});
+  late final GoRouter _router = GoRouter(
+    initialLocation: isLoggedIn ? '/home' : '/',
     routes: [
       // Auth pages — no bottom nav
       GoRoute(path: '/', builder: (context, state) => const Landing()),

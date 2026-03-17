@@ -17,6 +17,13 @@ class _LandingState extends State<Landing> {
     requestPermission(Permission.camera);
   }
 
+  Future<void> requestPermission(Permission permission) async {
+    var status = await permission.status;
+    if (!status.isGranted && !status.isPermanentlyDenied) {
+      await permission.request();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,16 +37,9 @@ class _LandingState extends State<Landing> {
             ElevatedButton(
               onPressed: () {
                 print('Navigating to Home');
-                context.go('/home');
+                context.go('/login');
               },
               child: const Text('Go to Home'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print('Requesting Camera Permission');
-                requestPermission(Permission.camera);
-              },
-              child: const Text('Request Camera Permission'),
             ),
           ],
         ),
@@ -47,21 +47,5 @@ class _LandingState extends State<Landing> {
     );
   }
 
-  Future<void> requestPermission(Permission permission) async {
-    // 1. Check the current status
-    var status = await permission.status;
-
-    if (status.isGranted) {
-      print("Permission already granted!");
-      // Proceed with opening Camera/Gallery
-    } else if (status.isDenied) {
-      // 2. Request the permission
-      if (await permission.request().isGranted) {
-        print("Permission granted after request.");
-      }
-    } else if (status.isPermanentlyDenied) {
-      // 3. Show a dialog to open App Settings
-      openAppSettings();
-    }
-  }
+ 
 }
