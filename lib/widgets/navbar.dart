@@ -1,4 +1,3 @@
-// lib/widgets/navbar.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,12 +5,14 @@ class Navbar extends StatelessWidget {
   const Navbar({super.key, required this.child});
   final Widget child;
 
+  // Cart badge count — replace with real state as needed
+  static const int _cartCount = 0;
+
   static const _tabs = [
     (path: '/home', icon: Icons.home_rounded, label: 'Home'),
-    (path: '/deals', icon: Icons.local_offer_rounded, label: 'Deals'),
-
-    (path: '/cart', icon: Icons.shopping_cart_rounded, label: 'Cart'),
-    (path: '/profile', icon: Icons.person_rounded, label: 'Profile'),
+    (path: '/deals', icon: Icons.favorite_border_rounded, label: 'Wishlist'),
+    (path: '/cart', icon: Icons.shopping_bag_outlined, label: 'Cart'),
+    (path: '/profile', icon: Icons.person_outline_rounded, label: 'Profile'),
   ];
 
   int _currentIndex(BuildContext context) {
@@ -22,16 +23,86 @@ class Navbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final current = _currentIndex(context);
     return Scaffold(
       body: child,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex(context),
-        onDestinationSelected: (i) => context.go(_tabs[i].path),
-        destinations: _tabs
-            .map(
-              (t) => NavigationDestination(icon: Icon(t.icon), label: t.label),
-            )
-            .toList(),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 16,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: SizedBox(
+            height: 64,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(_tabs.length, (i) {
+                final tab = _tabs[i];
+                final isSelected = i == current;
+                final isCart = tab.path == '/cart';
+
+                Widget iconWidget = Icon(
+                  tab.icon,
+                  color: isSelected ? Colors.white : Colors.black54,
+                  size: 24,
+                );
+
+                if (isCart && _cartCount > 0) {
+                  iconWidget = Badge.count(
+                    count: _cartCount,
+                    backgroundColor: Colors.redAccent,
+                    child: iconWidget,
+                  );
+                }
+
+                return GestureDetector(
+                  onTap: () => context.go(tab.path),
+                  behavior: HitTestBehavior.opaque,
+                  child: SizedBox(
+                    width: 72,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeInOut,
+                          width: 48,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? const Color(0xFF2D5A27)
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Center(child: iconWidget),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          tab.label,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: isSelected
+                                ? const Color(0xFF2D5A27)
+                                : Colors.black54,
+                            fontWeight: isSelected
+                                ? FontWeight.w600
+                                : FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+        ),
       ),
     );
   }

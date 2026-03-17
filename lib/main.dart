@@ -10,6 +10,7 @@ import 'package:shopping_app/views/deals.dart';
 import 'package:shopping_app/views/profile.dart';
 import 'package:shopping_app/views/shopping_cart.dart';
 import 'package:shopping_app/services/auth.dart';
+import 'package:shopping_app/views/content.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,13 @@ class MyApp extends StatelessWidget {
     initialLocation: isLoggedIn ? '/home' : '/',
     routes: [
       // Auth pages — no bottom nav
+      GoRoute(
+        path: '/content',
+        builder: (context, state) {
+          final item = state.extra as dynamic;
+          return Content(item: item);
+        },
+      ),
       GoRoute(path: '/', builder: (context, state) => const Landing()),
       GoRoute(path: '/login', builder: (context, state) => const Login()),
       GoRoute(path: '/signup', builder: (context, state) => const Signup()),

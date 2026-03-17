@@ -11,7 +11,6 @@ class Carousel extends StatefulWidget {
 }
 
 class _CarouselState extends State<Carousel> {
-  final CarouselController controller = CarouselController();
   late Future<List<Item>> _carouselItems;
 
   @override
@@ -22,41 +21,36 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: <Widget>[
-        ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: 300),
-          child: FutureBuilder<List<Item>>(
-            future: _carouselItems,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(child: Text('No items found'));
-              }
+    return SizedBox(
+      height: 300,
+      child: FutureBuilder<List<Item>>(
+        future: _carouselItems,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No items found'));
+          }
 
-              final items = snapshot.data!;
-              return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.8,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: HeroLayoutCard(itemInfo: items[index]),
-                    ),
-                  );
-                },
+          final items = snapshot.data!;
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return SizedBox(
+                width: MediaQuery.sizeOf(context).width * 0.8,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: HeroLayoutCard(itemInfo: items[index]),
+                ),
               );
             },
-          ),
-        ),
-      ],
+          );
+        },
+      ),
     );
   }
 }

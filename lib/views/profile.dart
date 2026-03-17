@@ -16,6 +16,9 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   File? _imageFile;
   final ImagePicker _picker = ImagePicker();
+  final String _firstName = "";
+  final String _lastName = "";
+  final String _email = "";
 
   @override
   void initState() {
