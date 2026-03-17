@@ -22,13 +22,12 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.sizeOf(context).height;
     return ListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: <Widget>[
         ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: height / 2.5),
+          constraints: BoxConstraints(maxHeight: 300),
           child: FutureBuilder<List<Item>>(
             future: _carouselItems,
             builder: (context, snapshot) {
@@ -41,13 +40,18 @@ class _CarouselState extends State<Carousel> {
               }
 
               final items = snapshot.data!;
-              return CarouselView.weighted(
-                controller: controller,
-                itemSnapping: true,
-                flexWeights: const <int>[1, 7, 1],
-                children: items.map((Item item) {
-                  return HeroLayoutCard(itemInfo: item);
-                }).toList(),
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.8,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: HeroLayoutCard(itemInfo: items[index]),
+                    ),
+                  );
+                },
               );
             },
           ),

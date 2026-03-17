@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/widgets/header.dart';
+import 'package:shopping_app/widgets/carousel.dart';
+import 'package:shopping_app/widgets/item_grid.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,14 +13,31 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 30.0),
-      child: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [Header()],
+    return const CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.only(top: 30.0),
+            child: Header(),
+          ),
         ),
-      ),
+        SliverToBoxAdapter(
+          child: Carousel(),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Text(
+              'All Items',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        ItemGrid(),
+      ],
     );
   }
 }
