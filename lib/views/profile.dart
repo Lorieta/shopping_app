@@ -4,6 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import '../services/auth.dart';
+import 'package:go_router/go_router.dart';
 import 'dart:io';
 
 class Profile extends StatefulWidget {
@@ -112,6 +114,7 @@ class _ProfileState extends State<Profile> {
               backgroundImage: _imageFile != null
                   ? FileImage(_imageFile!)
                   : null,
+
               child: _imageFile == null
                   ? const Icon(Icons.person, size: 60)
                   : null,
@@ -129,6 +132,14 @@ class _ProfileState extends State<Profile> {
               icon: const Icon(Icons.photo_library),
               label: const Text('Choose from Gallery'),
               onPressed: () => _pickImage(ImageSource.gallery),
+            ),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.logout),
+              label: const Text('Logout'),
+              onPressed: () {
+                AuthService.logout();
+                context.go('/login');
+              },
             ),
           ],
         ),

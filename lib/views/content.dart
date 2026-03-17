@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/item.dart';
+import '../providers/cartprovider.dart';
 import 'spanner.dart'; // Add this import
 
 class Content extends StatefulWidget {
@@ -72,13 +73,13 @@ class _ContentState extends State<Content> {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.deepPurple.withValues(alpha: 0.15),
+                      color: const Color(0xFFE4F1E1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       widget.item.itemType,
                       style: const TextStyle(
-                        color: Colors.deepPurple,
+                        color: Color(0xFF287274),
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),
@@ -91,7 +92,7 @@ class _ContentState extends State<Content> {
                     style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green,
+                      color: Color(0xFF0D585F),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -120,7 +121,16 @@ class _ContentState extends State<Content> {
                   SizedBox(
                     width: double.infinity,
                     child: FilledButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        CartState.instance.addItems(widget.item, _quantity);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Added $_quantity to cart'),
+                            behavior: SnackBarBehavior.floating,
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      },
                       icon: const Icon(Icons.shopping_cart_outlined),
                       label: Text('Add $_quantity to Cart'),
                       style: FilledButton.styleFrom(

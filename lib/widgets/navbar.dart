@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../providers/cartprovider.dart';
 
 class Navbar extends StatelessWidget {
   const Navbar({super.key, required this.child});
   final Widget child;
 
-  // Cart badge count — replace with real state as needed
-  static const int _cartCount = 0;
+
 
   static const _tabs = [
     (path: '/home', icon: Icons.home_rounded, label: 'Home'),
@@ -53,10 +53,18 @@ class Navbar extends StatelessWidget {
                   size: 24,
                 );
 
-                if (isCart && _cartCount > 0) {
-                  iconWidget = Badge.count(
-                    count: _cartCount,
-                    backgroundColor: Colors.redAccent,
+                if (isCart) {
+                  iconWidget = ListenableBuilder(
+                    listenable: CartState.instance,
+                    builder: (context, child) {
+                      final count = CartState.instance.totalItems;
+                      if (count == 0) return child!;
+                      return Badge.count(
+                        count: count,
+                        backgroundColor: Colors.redAccent,
+                        child: child,
+                      );
+                    },
                     child: iconWidget,
                   );
                 }
@@ -76,7 +84,7 @@ class Navbar extends StatelessWidget {
                           height: 32,
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? const Color(0xFF2D5A27)
+                                ? const Color(0xFFB4D9CC)
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -88,7 +96,7 @@ class Navbar extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 11,
                             color: isSelected
-                                ? const Color(0xFF2D5A27)
+                                ? const Color(0xFF0D585F)
                                 : Colors.black54,
                             fontWeight: isSelected
                                 ? FontWeight.w600
