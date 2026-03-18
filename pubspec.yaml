@@ -42,6 +42,7 @@ dependencies:
   image_picker: ^1.0.7
   path_provider: ^2.1.5
   philippines_rpcmb: ^0.0.3
+  provider: ^6.1.5+1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -75,7 +76,12 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/data/items.json
-
+    - lib/assets/images/logo.png
+    - lib/assets/images/landing.jpg
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "lib/assets/images/logo.png"
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

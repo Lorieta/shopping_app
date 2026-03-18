@@ -25,35 +25,29 @@ class _ItemGridState extends State<ItemGrid> {
       future: _allItems,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SliverToBoxAdapter(
-            child: Center(child: CircularProgressIndicator()),
-          );
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return SliverToBoxAdapter(
-            child: Center(child: Text('Error: ${snapshot.error}')),
-          );
+          return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const SliverToBoxAdapter(
-            child: Center(child: Text('No items found')),
-          );
+          return const Center(child: Text('No items found'));
         }
 
-        final items = snapshot.data!;
-        return SliverPadding(
-          padding: const EdgeInsets.all(16.0),
-          sliver: SliverGrid(
+        final items = snapshot.data!.where((item) => !item.onCarousel).toList();
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisSpacing: 16.0,
-              crossAxisSpacing: 16.0,
-              childAspectRatio: 0.75,
+              mainAxisSpacing: 8.0,
+              crossAxisSpacing: 8.0,
+              mainAxisExtent: 220, // Increased to fit price if needed
             ),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return HeroLayoutCard(itemInfo: items[index]);
-              },
-              childCount: items.length,
-            ),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return HeroLayoutCard(itemInfo: items[index]);
+            },
           ),
         );
       },

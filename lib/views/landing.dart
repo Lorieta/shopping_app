@@ -13,7 +13,6 @@ class _LandingState extends State<Landing> {
   @override
   void initState() {
     super.initState();
-    // Automatically request camera permission on page load
     requestPermission(Permission.camera);
   }
 
@@ -27,25 +26,98 @@ class _LandingState extends State<Landing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Landing')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Welcome to the Shopping App!'),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                print('Navigating to Home');
-                context.go('/login');
-              },
-              child: const Text('Go to Home'),
+      body: Stack(
+        children: [
+          // Background Image with Overlay
+          Positioned.fill(
+            child: Image.asset(
+              'lib/assets/images/landing.jpg',
+              fit: BoxFit.cover,
             ),
-          ],
-        ),
+          ),
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.3),
+                    Colors.black.withValues(alpha: 0.7),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // Content
+          SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Logo
+                    Container(
+                      child: Image.asset(
+                        'lib/assets/images/logo.png',
+                        width: 80,
+                        height: 80,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    const Text(
+                      'Embedix',
+                      style: TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                    const Text(
+                      'Your Premium Shopping Destination',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    const Spacer(),
+
+                    // Action Button
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: ElevatedButton(
+                        onPressed: () => context.go('/login'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF0D585F),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(28),
+                          ),
+                          elevation: 8,
+                        ),
+                        child: const Text(
+                          'GET STARTED',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 48),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
-
- 
 }

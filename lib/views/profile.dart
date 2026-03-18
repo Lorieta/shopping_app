@@ -17,10 +17,22 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   File? _imageFile;
+
+  Widget _buildActionItem(BuildContext context, IconData icon, String label) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 32),
+        const SizedBox(height: 8),
+        Text(label, style: Theme.of(context).textTheme.bodyMedium),
+      ],
+    );
+  }
+
   final ImagePicker _picker = ImagePicker();
-  final String _firstName = "";
-  final String _lastName = "";
-  final String _email = "";
+  String _firstName = "";
+  String _lastName = "";
+  String _email = "";
 
   @override
   void initState() {
@@ -31,9 +43,19 @@ class _ProfileState extends State<Profile> {
   Future<void> _loadSavedImage() async {
     final prefs = await SharedPreferences.getInstance();
     final savedPath = prefs.getString('profile_image_path');
+    final userData = await AuthService.getUserData();
+
     if (savedPath != null && File(savedPath).existsSync()) {
-      setState(() => _imageFile = File(savedPath));
+      setState(() {
+        _imageFile = File(savedPath);
+      });
     }
+
+    setState(() {
+      _firstName = userData['firstName'] ?? "";
+      _lastName = userData['lastName'] ?? "";
+      _email = userData['email'] ?? "";
+    });
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -107,22 +129,62 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(title: const Text('Profile')),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CircleAvatar(
-              radius: 60,
-              backgroundImage: _imageFile != null
-                  ? FileImage(_imageFile!)
-                  : null,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
 
-              child: _imageFile == null
-                  ? const Icon(Icons.person, size: 60)
-                  : null,
+              children: [
+                CircleAvatar(
+                  radius: 60,
+                  backgroundImage: _imageFile != null
+                      ? FileImage(_imageFile!)
+                      : null,
+
+                  child: _imageFile == null
+                      ? const Icon(Icons.person, size: 60)
+                      : null,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  '$_firstName $_lastName',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(_email),
+                const SizedBox(height: 24),
+              ],
             ),
-            const SizedBox(height: 16),
-            Text('John Doe', style: Theme.of(context).textTheme.titleLarge),
-            const Text('johndoe@email.com'),
-            const SizedBox(height: 24),
+
+            // Order Actions
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildActionItem(
+                    context,
+                    Icons.account_balance_wallet_outlined,
+                    'To Pay',
+                  ),
+                  _buildActionItem(
+                    context,
+                    Icons.inventory_2_outlined,
+                    'To Ship',
+                  ),
+                  _buildActionItem(
+                    context,
+                    Icons.local_shipping_outlined,
+                    'To Receive',
+                  ),
+                  _buildActionItem(context, Icons.star_border, 'To Rate'),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+              child: Divider(),
+            ),
+
             ElevatedButton.icon(
               icon: const Icon(Icons.camera_alt),
               label: const Text('Take Photo'),
@@ -137,7 +199,6 @@ class _ProfileState extends State<Profile> {
               icon: const Icon(Icons.logout),
               label: const Text('Logout'),
               onPressed: () {
-                AuthService.logout();
                 context.go('/login');
               },
             ),

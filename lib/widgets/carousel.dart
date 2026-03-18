@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import '../models/item.dart';
 import '../services/item.dart';
 import 'card.dart';
@@ -21,36 +22,42 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
-      child: FutureBuilder<List<Item>>(
-        future: _carouselItems,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No items found'));
-          }
+    return Stack(
+      children: [
+        // Scrolling layer
+        SizedBox(
+          height: 300,
+          child: FutureBuilder<List<Item>>(
+            future: _carouselItems,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No items found'));
+              }
 
-          final items = snapshot.data!;
-          return ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return SizedBox(
-                width: MediaQuery.sizeOf(context).width * 0.8,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: HeroLayoutCard(itemInfo: items[index]),
-                ),
+              final items = snapshot.data!;
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.zero, // ← removes the left gap
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final isLast = index == items.length - 1;
+                  return SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.8,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: isLast ? 0 : 16.0),
+                      child: HeroLayoutCard(itemInfo: items[index]),
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
-      ),
+          ),
+        ),
+      ],
     );
   }
 }

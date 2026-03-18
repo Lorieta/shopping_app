@@ -57,9 +57,26 @@ class _LoginState extends State<Login> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Center(
+                    child: Image.asset(
+                      'lib/assets/images/logo.png',
+                      height: 100,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Embedix',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF0D585F),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
                   const Text(
                     'SIGN IN',
-                    style: TextStyle(fontSize: 24, color: Colors.grey),
+                    style: TextStyle(fontSize: 14, color: Colors.grey, letterSpacing: 2),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),

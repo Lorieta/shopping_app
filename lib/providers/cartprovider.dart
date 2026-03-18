@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
 import '../models/item.dart';
 
 class CartItem {
@@ -6,55 +7,48 @@ class CartItem {
   int quantity;
 
   CartItem({required this.item, required this.quantity});
+
+  double get totalPrice => item.itemPrice * quantity;
 }
 
-class CartState extends ChangeNotifier {
-  // 1. Private constructor
-  CartState._sharedInstance();
-
-  // 2. Single static instance
-  static final CartState instance = CartState._sharedInstance();
-
+class CartModel extends ChangeNotifier {
   final List<CartItem> _items = [];
-  List<CartItem> get items => List.unmodifiable(_items);
+
+  UnmodifiableListView<CartItem> get items => UnmodifiableListView(_items);
+
+  double get totalPrice => _items.fold(0, (sum, item) => sum + item.totalPrice);
 
   void addItems(Item item, int quantity) {
-    final existingIndex = _items.indexWhere((e) => e.item.itemId == item.itemId);
-    if (existingIndex >= 0) {
-      _items[existingIndex].quantity += quantity;
-    } else {
-      _items.add(CartItem(item: item, quantity: quantity));
-    }
+    final existing = _items.firstWhereOrNull(
+      (i) => i.item.itemId == item.itemId,
+    );
+    existing != null
+        ? existing.quantity += quantity
+        : _items.add(CartItem(item: item, quantity: quantity));
+    notifyListeners();
+  }
+
+  void removeItem(Item item) {
+    _items.removeWhere((i) => i.item.itemId == item.itemId);
     notifyListeners();
   }
 
   void updateQuantity(Item item, int quantity) {
-    final existingIndex = _items.indexWhere((e) => e.item.itemId == item.itemId);
-    if (existingIndex >= 0) {
-      if (quantity <= 0) {
-        _items.removeAt(existingIndex);
-      } else {
-        _items[existingIndex].quantity = quantity;
-      }
+    if (quantity <= 0) return removeItem(item);
+
+    final existing = _items.firstWhereOrNull(
+      (i) => i.item.itemId == item.itemId,
+    );
+    if (existing != null) {
+      existing.quantity = quantity;
       notifyListeners();
     }
   }
 
-  void removeItem(Item item) {
-    _items.removeWhere((e) => e.item.itemId == item.itemId);
-    notifyListeners();
-  }
-
-  void clear() {
+  void removeAll() {
     _items.clear();
     notifyListeners();
   }
 
-  int get totalItems {
-    return _items.fold(0, (sum, current) => sum + current.quantity);
-  }
-
-  double get totalPrice {
-    return _items.fold(0, (sum, current) => sum + (current.item.itemPrice * current.quantity));
-  }
+  int get totalItems => _items.length;
 }

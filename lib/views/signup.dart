@@ -61,6 +61,29 @@ class _SignupState extends State<Signup> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Center(
+                    child: Image.asset(
+                      'lib/assets/images/logo.png',
+                      height: 80,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Embedix',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF0D585F),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'CREATE ACCOUNT',
+                    style: TextStyle(fontSize: 12, color: Colors.grey, letterSpacing: 2),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
                   Row(
                     children: [
                       Expanded(

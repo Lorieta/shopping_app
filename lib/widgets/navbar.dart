@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../providers/cartprovider.dart';
 
 class Navbar extends StatelessWidget {
   const Navbar({super.key, required this.child});
   final Widget child;
-
-
 
   static const _tabs = [
     (path: '/home', icon: Icons.home_rounded, label: 'Home'),
@@ -54,10 +53,9 @@ class Navbar extends StatelessWidget {
                 );
 
                 if (isCart) {
-                  iconWidget = ListenableBuilder(
-                    listenable: CartState.instance,
-                    builder: (context, child) {
-                      final count = CartState.instance.totalItems;
+                  iconWidget = Consumer<CartModel>(
+                    builder: (context, cart, child) {
+                      final count = cart.totalItems;
                       if (count == 0) return child!;
                       return Badge.count(
                         count: count,

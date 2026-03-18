@@ -11,6 +11,8 @@ import 'package:shopping_app/views/profile.dart';
 import 'package:shopping_app/views/shopping_cart.dart';
 import 'package:shopping_app/services/auth.dart';
 import 'package:shopping_app/views/content.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_app/providers/cartprovider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,21 +53,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0D585F)),
+    return ChangeNotifierProvider(
+      create: (context) => CartModel(),
+      child: MaterialApp.router(
+        title: 'Embedix',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0D585F)),
+        ),
+        builder: (context, child) => ResponsiveBreakpoints.builder(
+          child: child!,
+          breakpoints: const [
+            Breakpoint(start: 0, end: 450, name: MOBILE),
+            Breakpoint(start: 451, end: 800, name: TABLET),
+            Breakpoint(start: 801, end: 1920, name: DESKTOP),
+            Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+          ],
+        ),
+        routerConfig: _router,
       ),
-      builder: (context, child) => ResponsiveBreakpoints.builder(
-        child: child!,
-        breakpoints: const [
-          Breakpoint(start: 0, end: 450, name: MOBILE),
-          Breakpoint(start: 451, end: 800, name: TABLET),
-          Breakpoint(start: 801, end: 1920, name: DESKTOP),
-          Breakpoint(start: 1921, end: double.infinity, name: '4K'),
-        ],
-      ),
-      routerConfig: _router,
     );
   }
 }

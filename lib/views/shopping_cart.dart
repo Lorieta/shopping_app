@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../providers/cartprovider.dart';
 
 class ShoppingCart extends StatelessWidget {
@@ -8,10 +9,9 @@ class ShoppingCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Shopping Cart')),
-      body: ListenableBuilder(
-        listenable: CartState.instance,
-        builder: (context, child) {
-          final items = CartState.instance.items;
+      body: Consumer<CartModel>(
+        builder: (context, cart, child) {
+          final items = cart.items;
 
           if (items.isEmpty) {
             return const Center(
@@ -63,7 +63,7 @@ class ShoppingCart extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                '\$${cartItem.item.itemPrice.toStringAsFixed(2)}',
+                                '\Php. ${cartItem.item.itemPrice.toStringAsFixed(2)}',
                                 style: const TextStyle(
                                   color: Color(0xFF0D585F),
                                   fontWeight: FontWeight.w600,
@@ -77,7 +77,7 @@ class ShoppingCart extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () =>
-                                  CartState.instance.removeItem(cartItem.item),
+                                  cart.removeItem(cartItem.item),
                               icon: const Icon(
                                 Icons.delete_outline,
                                 color: Colors.redAccent,
@@ -96,7 +96,7 @@ class ShoppingCart extends StatelessWidget {
                                     visualDensity: VisualDensity.compact,
                                     icon: const Icon(Icons.remove),
                                     onPressed: () =>
-                                        CartState.instance.updateQuantity(
+                                        cart.updateQuantity(
                                           cartItem.item,
                                           cartItem.quantity - 1,
                                         ),
@@ -112,7 +112,7 @@ class ShoppingCart extends StatelessWidget {
                                     visualDensity: VisualDensity.compact,
                                     icon: const Icon(Icons.add),
                                     onPressed: () =>
-                                        CartState.instance.updateQuantity(
+                                        cart.updateQuantity(
                                           cartItem.item,
                                           cartItem.quantity + 1,
                                         ),
@@ -151,7 +151,7 @@ class ShoppingCart extends StatelessWidget {
                             style: TextStyle(fontSize: 18, color: Colors.grey),
                           ),
                           Text(
-                            '\$${CartState.instance.totalPrice.toStringAsFixed(2)}',
+                            '\Php. ${cart.totalPrice.toStringAsFixed(2)}',
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -182,3 +182,4 @@ class ShoppingCart extends StatelessWidget {
     );
   }
 }
+

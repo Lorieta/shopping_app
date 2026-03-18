@@ -3,10 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../models/item.dart';
 
 class HeroLayoutCard extends StatelessWidget {
-  const HeroLayoutCard({
-    super.key,
-    required this.itemInfo,
-  });
+  const HeroLayoutCard({super.key, required this.itemInfo});
 
   final Item itemInfo;
 
@@ -17,7 +14,7 @@ class HeroLayoutCard extends StatelessWidget {
       child: Card(
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24.0),
+          borderRadius: BorderRadius.circular(16.0),
         ),
         child: Stack(
           fit: StackFit.expand,
@@ -68,14 +65,15 @@ class HeroLayoutCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      '\$${itemInfo.itemPrice.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        color: Colors.greenAccent,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                    if (itemInfo.onCarousel == false)
+                      Text(
+                        'Php ${itemInfo.itemPrice.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          color: Colors.greenAccent,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),

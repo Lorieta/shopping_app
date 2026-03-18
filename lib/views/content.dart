@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/item.dart';
 import '../providers/cartprovider.dart';
-import 'spanner.dart'; // Add this import
+import '../widgets/spanner.dart';
 
 class Content extends StatefulWidget {
   const Content({super.key, required this.item});
@@ -18,90 +19,50 @@ class _ContentState extends State<Content> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 320,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                widget.item.itemName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      blurRadius: 4,
-                    ),
-                  ],
-                ),
-              ),
-              background: Image.network(
-                widget.item.itemImage,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  child: const Icon(
-                    Icons.broken_image,
-                    size: 64,
-                    color: Colors.white54,
-                  ),
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+
+          children: [
+            Image.network(
+              widget.item.itemImage,
+              width: double.infinity,
+              height: 320,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Container(
+                width: double.infinity,
+                height: 320,
+                color: const Color.fromARGB(255, 255, 255, 255),
+                child: const Icon(
+                  Icons.broken_image,
+                  size: 64,
+                  color: Colors.white54,
                 ),
               ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Quantity stepper
-                  Spanner(
-                    initialQuantity: _quantity,
-                    onQuantityChanged: (newQuantity) {
-                      setState(() {
-                        _quantity = newQuantity;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: 24),
-                  // Type badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE4F1E1),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      widget.item.itemType,
-                      style: const TextStyle(
-                        color: Color(0xFF287274),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
                   // Price
                   Text(
-                    '\$${widget.item.itemPrice.toStringAsFixed(2)}',
+                    'Php.${widget.item.itemPrice.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF0D585F),
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  // Description header
-                  const Text(
-                    'Description',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Text(
+                    widget.item.itemName,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 24),
                   Text(
                     widget.item.itemDescription,
                     style: const TextStyle(
@@ -110,19 +71,30 @@ class _ContentState extends State<Content> {
                       color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  // Item ID
-                  Text(
-                    'SKU: ${widget.item.itemId}',
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+
+                  const SizedBox(height: 24),
+                  Row(
+                    children: [
+                      Text('Quantity', style: TextStyle(fontSize: 20)),
+                      Spanner(
+                        initialQuantity: _quantity,
+                        onQuantityChanged: (newQuantity) {
+                          setState(() {
+                            _quantity = newQuantity;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 32),
-                  // Add to cart button
+
+                  const SizedBox(height: 24),
+
+                  // Description header
                   SizedBox(
                     width: double.infinity,
                     child: FilledButton.icon(
                       onPressed: () {
-                        CartState.instance.addItems(widget.item, _quantity);
+                        context.read<CartModel>().addItems(widget.item, _quantity);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Added $_quantity to cart'),
@@ -132,7 +104,7 @@ class _ContentState extends State<Content> {
                         );
                       },
                       icon: const Icon(Icons.shopping_cart_outlined),
-                      label: Text('Add $_quantity to Cart'),
+                      label: Text('Add to Cart'),
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         textStyle: const TextStyle(fontSize: 16),
@@ -142,9 +114,10 @@ class _ContentState extends State<Content> {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
+
