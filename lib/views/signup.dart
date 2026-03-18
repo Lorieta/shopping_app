@@ -14,7 +14,7 @@ class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _reenterPasswordController = TextEditingController();
 
@@ -26,7 +26,7 @@ class _SignupState extends State<Signup> {
   void dispose() {
     _firstNameController.dispose();
     _lastNameController.dispose();
-    _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     _reenterPasswordController.dispose();
     super.dispose();
@@ -42,7 +42,7 @@ class _SignupState extends State<Signup> {
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
-          'Already have an account',
+          'Create Account',
           style: TextStyle(fontSize: 16),
         ),
         backgroundColor: Colors.white,
@@ -80,7 +80,11 @@ class _SignupState extends State<Signup> {
                   const SizedBox(height: 8),
                   const Text(
                     'CREATE ACCOUNT',
-                    style: TextStyle(fontSize: 12, color: Colors.grey, letterSpacing: 2),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                      letterSpacing: 2,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
@@ -109,8 +113,8 @@ class _SignupState extends State<Signup> {
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(
-                    controller: _emailController,
-                    labelText: 'Email',
+                    controller: _usernameController,
+                    labelText: 'Username',
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) =>
                         value == null || value.isEmpty ? 'Required' : null,
@@ -184,11 +188,12 @@ class _SignupState extends State<Signup> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate() &&
                           _selectedRegion != null &&
-                          _selectedProvince != null) {
+                          _selectedProvince != null &&
+                          _selectedMunicipality != null) {
                         final success = await AuthService.signUp(
                           firstName: _firstNameController.text,
                           lastName: _lastNameController.text,
-                          email: _emailController.text,
+                          username: _usernameController.text,
                           password: _passwordController.text,
                           region: _selectedRegion!.regionName,
                           province: _selectedProvince!.name,

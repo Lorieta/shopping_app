@@ -12,12 +12,12 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
     if (!_formKey.currentState!.validate()) return;
 
     final success = await AuthService.login(
-      email: _emailController.text,
+      username: _usernameController.text,
       password: _passwordController.text,
     );
 
@@ -76,13 +76,17 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 8),
                   const Text(
                     'SIGN IN',
-                    style: TextStyle(fontSize: 14, color: Colors.grey, letterSpacing: 2),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      letterSpacing: 2,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
                   CustomTextField(
-                    controller: _emailController,
-                    labelText: 'Email',
+                    controller: _usernameController,
+                    labelText: 'Username',
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) =>
                         value == null || value.isEmpty ? 'Required' : null,

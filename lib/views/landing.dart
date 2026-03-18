@@ -58,14 +58,6 @@ class _LandingState extends State<Landing> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Logo
-                    Container(
-                      child: Image.asset(
-                        'lib/assets/images/logo.png',
-                        width: 80,
-                        height: 80,
-                      ),
-                    ),
                     const SizedBox(height: 24),
                     const Text(
                       'Embedix',
@@ -77,7 +69,7 @@ class _LandingState extends State<Landing> {
                       ),
                     ),
                     const Text(
-                      'Your Premium Shopping Destination',
+                      'The Hobbyist\'s Paradise',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white70,

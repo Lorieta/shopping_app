@@ -4,7 +4,7 @@ class AuthService {
   static Future<bool> signUp({
     required String firstName,
     required String lastName,
-    required String email,
+    required String username,
     required String password,
     required String region,
     required String province,
@@ -14,7 +14,7 @@ class AuthService {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('firstName', firstName);
       await prefs.setString('lastName', lastName);
-      await prefs.setString('email', email);
+      await prefs.setString('username', username);
       await prefs.setString('password', password);
       await prefs.setString('region', region);
       await prefs.setString('province', province);
@@ -26,19 +26,19 @@ class AuthService {
   }
 
   static Future<bool> login({
-    required String email,
+    required String username,
     required String password,
   }) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final savedEmail = prefs.getString('email');
+      final savedUsername = prefs.getString('username');
       final savedPassword = prefs.getString('password');
 
-      if (savedEmail == null || savedPassword == null) {
+      if (savedUsername == null || savedPassword == null) {
         return false;
       }
 
-      return email == savedEmail && password == savedPassword;
+      return username == savedUsername && password == savedPassword;
     } catch (e) {
       return false;
     }
@@ -47,9 +47,9 @@ class AuthService {
   static Future<bool> isLoggedIn() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final savedEmail = prefs.getString('email');
+      final savedUsername = prefs.getString('username');
       final savedPassword = prefs.getString('password');
-      return savedEmail != null && savedPassword != null;
+      return savedUsername != null && savedPassword != null;
     } catch (e) {
       return false;
     }
@@ -60,7 +60,7 @@ class AuthService {
     return {
       'firstName': prefs.getString('firstName'),
       'lastName': prefs.getString('lastName'),
-      'email': prefs.getString('email'),
+      'username': prefs.getString('username'),
       'region': prefs.getString('region'),
       'province': prefs.getString('province'),
       'municipality': prefs.getString('municipality'),
@@ -72,7 +72,7 @@ class AuthService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('firstName');
     await prefs.remove('lastName');
-    await prefs.remove('email');
+    await prefs.remove('username');
     await prefs.remove('password');
     await prefs.remove('region');
     await prefs.remove('province');

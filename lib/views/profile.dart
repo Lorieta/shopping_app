@@ -32,7 +32,7 @@ class _ProfileState extends State<Profile> {
   final ImagePicker _picker = ImagePicker();
   String _firstName = "";
   String _lastName = "";
-  String _email = "";
+  String _username = "";
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _ProfileState extends State<Profile> {
     setState(() {
       _firstName = userData['firstName'] ?? "";
       _lastName = userData['lastName'] ?? "";
-      _email = userData['email'] ?? "";
+      _username = userData['username'] ?? "";
     });
   }
 
@@ -131,26 +131,16 @@ class _ProfileState extends State<Profile> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
 
               children: [
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: _imageFile != null
-                      ? FileImage(_imageFile!)
-                      : null,
-
-                  child: _imageFile == null
-                      ? const Icon(Icons.person, size: 60)
-                      : null,
-                ),
                 const SizedBox(height: 16),
                 Text(
                   '$_firstName $_lastName',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                Text(_email),
+                Text(_username),
                 const SizedBox(height: 24),
               ],
             ),
@@ -184,23 +174,17 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
               child: Divider(),
             ),
-
-            ElevatedButton.icon(
-              icon: const Icon(Icons.camera_alt),
-              label: const Text('Take Photo'),
-              onPressed: () => _pickImage(ImageSource.camera),
-            ),
-            ElevatedButton.icon(
-              icon: const Icon(Icons.photo_library),
-              label: const Text('Choose from Gallery'),
-              onPressed: () => _pickImage(ImageSource.gallery),
-            ),
-            ElevatedButton.icon(
-              icon: const Icon(Icons.logout),
-              label: const Text('Logout'),
-              onPressed: () {
-                context.go('/login');
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.logout),
+                  label: const Text('Logout'),
+                  onPressed: () {
+                    context.go('/login');
+                  },
+                ),
+              ],
             ),
           ],
         ),
