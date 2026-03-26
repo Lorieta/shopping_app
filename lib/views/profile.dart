@@ -133,8 +133,19 @@ class _ProfileState extends State<Profile> {
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-
               children: [
+                const SizedBox(height: 16),
+                // Profile Icon
+                CircleAvatar(
+                  radius: 48,
+                  backgroundColor: Colors.grey.shade300,
+                  backgroundImage: _imageFile != null
+                      ? FileImage(_imageFile!)
+                      : null,
+                  child: _imageFile == null
+                      ? const Icon(Icons.person, size: 48, color: Colors.grey)
+                      : null,
+                ),
                 const SizedBox(height: 16),
                 Text(
                   '$_firstName $_lastName',
