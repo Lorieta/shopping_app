@@ -13,16 +13,22 @@ import 'package:shopping_app/services/auth.dart';
 import 'package:shopping_app/views/content.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/cartprovider.dart';
+import 'services/database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final loggedIn = await AuthService.isLoggedIn();
+  final authService = AuthService();
+  final loggedIn = await authService.getUserData(1) != null;
+  late final DatabaseHelper db = DatabaseHelper();
+  await db.initDb(); // Ensure the database is initialized
+  // Ensure the database connection is established
   runApp(MyApp(isLoggedIn: loggedIn));
 }
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
   MyApp({super.key, required this.isLoggedIn});
+
   late final GoRouter _router = GoRouter(
     initialLocation: isLoggedIn ? '/home' : '/',
     routes: [
@@ -44,7 +50,7 @@ class MyApp extends StatelessWidget {
         routes: [
           GoRoute(path: '/home', builder: (_, __) => const Home()),
           GoRoute(path: '/deals', builder: (_, __) => const Deals()),
-          GoRoute(path: '/profile', builder: (_, __) => const Profile()),
+          /*      GoRoute(path: '/profile', builder: (_, __) => const Profile()),*/
           GoRoute(path: '/cart', builder: (_, __) => const ShoppingCart()),
         ],
       ),

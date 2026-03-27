@@ -8,7 +8,7 @@ class CartItem {
 
   CartItem({required this.item, required this.quantity});
 
-  double get totalPrice => item.itemPrice * quantity;
+  double get totalPrice => item.price * quantity;
 }
 
 class CartModel extends ChangeNotifier {
@@ -19,9 +19,7 @@ class CartModel extends ChangeNotifier {
   double get totalPrice => _items.fold(0, (sum, item) => sum + item.totalPrice);
 
   void addItems(Item item, int quantity) {
-    final existing = _items.firstWhereOrNull(
-      (i) => i.item.itemId == item.itemId,
-    );
+    final existing = _items.firstWhereOrNull((i) => i.item.id == item.id);
     existing != null
         ? existing.quantity += quantity
         : _items.add(CartItem(item: item, quantity: quantity));
@@ -29,16 +27,14 @@ class CartModel extends ChangeNotifier {
   }
 
   void removeItem(Item item) {
-    _items.removeWhere((i) => i.item.itemId == item.itemId);
+    _items.removeWhere((i) => i.item.id == item.id);
     notifyListeners();
   }
 
   void updateQuantity(Item item, int quantity) {
     if (quantity <= 0) return removeItem(item);
 
-    final existing = _items.firstWhereOrNull(
-      (i) => i.item.itemId == item.itemId,
-    );
+    final existing = _items.firstWhereOrNull((i) => i.item.id == item.id);
     if (existing != null) {
       existing.quantity = quantity;
       notifyListeners();

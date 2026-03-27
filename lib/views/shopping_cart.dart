@@ -37,7 +37,7 @@ class ShoppingCart extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.network(
-                            cartItem.item.itemImage,
+                            cartItem.item.image,
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,
@@ -55,7 +55,7 @@ class ShoppingCart extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                cartItem.item.itemName,
+                                cartItem.item.name,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -63,7 +63,7 @@ class ShoppingCart extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                '\Php. ${cartItem.item.itemPrice.toStringAsFixed(2)}',
+                                '\Php. ${cartItem.item.price.toStringAsFixed(2)}',
                                 style: const TextStyle(
                                   color: Color(0xFF0D585F),
                                   fontWeight: FontWeight.w600,
@@ -76,8 +76,7 @@ class ShoppingCart extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             IconButton(
-                              onPressed: () =>
-                                  cart.removeItem(cartItem.item),
+                              onPressed: () => cart.removeItem(cartItem.item),
                               icon: const Icon(
                                 Icons.delete_outline,
                                 color: Colors.redAccent,
@@ -95,11 +94,10 @@ class ShoppingCart extends StatelessWidget {
                                     iconSize: 16,
                                     visualDensity: VisualDensity.compact,
                                     icon: const Icon(Icons.remove),
-                                    onPressed: () =>
-                                        cart.updateQuantity(
-                                          cartItem.item,
-                                          cartItem.quantity - 1,
-                                        ),
+                                    onPressed: () => cart.updateQuantity(
+                                      cartItem.item,
+                                      cartItem.quantity - 1,
+                                    ),
                                   ),
                                   Text(
                                     '${cartItem.quantity}',
@@ -111,11 +109,10 @@ class ShoppingCart extends StatelessWidget {
                                     iconSize: 16,
                                     visualDensity: VisualDensity.compact,
                                     icon: const Icon(Icons.add),
-                                    onPressed: () =>
-                                        cart.updateQuantity(
-                                          cartItem.item,
-                                          cartItem.quantity + 1,
-                                        ),
+                                    onPressed: () => cart.updateQuantity(
+                                      cartItem.item,
+                                      cartItem.quantity + 1,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -182,4 +179,3 @@ class ShoppingCart extends StatelessWidget {
     );
   }
 }
-

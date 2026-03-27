@@ -26,7 +26,7 @@ class _ContentState extends State<Content> {
 
           children: [
             Image.network(
-              widget.item.itemImage,
+              widget.item.image,
               width: double.infinity,
               height: 320,
               fit: BoxFit.cover,
@@ -48,7 +48,7 @@ class _ContentState extends State<Content> {
                 children: [
                   // Price
                   Text(
-                    'Php.${widget.item.itemPrice.toStringAsFixed(2)}',
+                    'Php.${widget.item.price.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class _ContentState extends State<Content> {
                     ),
                   ),
                   Text(
-                    widget.item.itemName,
+                    widget.item.name,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class _ContentState extends State<Content> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    widget.item.itemDescription,
+                    widget.item.description,
                     style: const TextStyle(
                       fontSize: 15,
                       height: 1.6,
@@ -94,7 +94,10 @@ class _ContentState extends State<Content> {
                     width: double.infinity,
                     child: FilledButton.icon(
                       onPressed: () {
-                        context.read<CartModel>().addItems(widget.item, _quantity);
+                        context.read<CartModel>().addItems(
+                          widget.item,
+                          _quantity,
+                        );
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Added $_quantity to cart'),
@@ -120,4 +123,3 @@ class _ContentState extends State<Content> {
     );
   }
 }
-

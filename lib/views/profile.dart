@@ -7,7 +7,8 @@ import 'package:path/path.dart' as p;
 import '../services/auth.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:io';
-
+/**
+d
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -202,4 +203,7 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
+
 }
+
+*/

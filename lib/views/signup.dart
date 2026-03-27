@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:philippines_rpcmb/philippines_rpcmb.dart';
+import 'package:shopping_app/models/user.dart';
 import '../services/auth.dart';
 import '../widgets/forms.dart';
 
@@ -41,10 +42,7 @@ class _SignupState extends State<Signup> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Create Account',
-          style: TextStyle(fontSize: 16),
-        ),
+        title: const Text('Create Account', style: TextStyle(fontSize: 16)),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
@@ -186,19 +184,20 @@ class _SignupState extends State<Signup> {
                   CustomPrimaryButton(
                     text: 'Create Account',
                     onPressed: () async {
+                      var user = User(
+                        username: _firstNameController.text,
+                        password: _passwordController.text,
+                        firstName: _firstNameController.text,
+                        lastName: _lastNameController.text,
+                        region: _selectedRegion!.regionName,
+                        province: _selectedProvince!.name,
+                        municipality: _selectedMunicipality!.name,
+                      );
                       if (_formKey.currentState!.validate() &&
                           _selectedRegion != null &&
                           _selectedProvince != null &&
                           _selectedMunicipality != null) {
-                        final success = await AuthService.signUp(
-                          firstName: _firstNameController.text,
-                          lastName: _lastNameController.text,
-                          username: _usernameController.text,
-                          password: _passwordController.text,
-                          region: _selectedRegion!.regionName,
-                          province: _selectedProvince!.name,
-                          municipality: _selectedMunicipality!.name,
-                        );
+                        final success = await AuthService.registerUser(user);
 
                         if (!context.mounted) return;
 

@@ -20,13 +20,7 @@ class _HeaderState extends State<Header> {
     _loadPreferences();
   }
 
-  Future<void> _loadPreferences() async {
-    final userData = await AuthService.getUserData();
-    setState(() {
-      _province = userData['province'] ?? "";
-      _municipality = userData['municipality'] ?? "";
-    });
-  }
+  Future<void> _loadPreferences() async {}
 
   @override
   Widget build(BuildContext context) {

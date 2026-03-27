@@ -6,7 +6,7 @@ class ItemService {
   static Future<List<Item>> loadItems() async {
     final String response = await rootBundle.loadString('lib/data/items.json');
     final List<dynamic> data = json.decode(response);
-    return data.map((json) => Item.fromJson(json)).toList();
+    return data.map((json) => Item.fromMap(json)).toList();
   }
 
   static Future<List<Item>> getCarouselItems() async {

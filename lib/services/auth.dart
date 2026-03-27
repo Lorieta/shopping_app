@@ -1,27 +1,30 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'database.dart';
+import '../models/user.dart';
 
 class AuthService {
-  static Future<bool> signUp({
-    required String firstName,
-    required String lastName,
-    required String username,
-    required String password,
-    required String region,
-    required String province,
-    required String municipality,
-  }) async {
+  static DatabaseHelper dbHelper = DatabaseHelper();
+
+  static Future<bool> registerUser(User user) async {
+    final db = await dbHelper.database;
     try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('firstName', firstName);
-      await prefs.setString('lastName', lastName);
-      await prefs.setString('username', username);
-      await prefs.setString('password', password);
-      await prefs.setString('region', region);
-      await prefs.setString('province', province);
-      await prefs.setString('municipality', municipality);
+      String sql =
+          "INSERT INTO users (firstName, lastName, username, password, region, province,  municipality) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      final id = await dbHelper.database;
+      db.rawInsert(sql, [
+        user.firstName,
+        user.lastName,
+        user.username,
+        user.password,
+        user.region,
+        user.province,
+        user.municipality,
+      ]);
+      print('User registered: ${user.username}, ID: $id');
       return true;
     } catch (e) {
-      return false;
+      print('Error registering user: $e');
+      rethrow;
     }
   }
 
@@ -29,18 +32,45 @@ class AuthService {
     required String username,
     required String password,
   }) async {
+    final db = await dbHelper.database;
+    var result = await db.rawQuery(
+      "SELECT * FROM users WHERE username = ? and password = ?",
+      [username, password],
+    );
+
+    if (result.length > 0) {
+      print('User found: ${result.first['username']}');
+      return true;
+    }
+    print('User not found');
+    return false;
+  }
+
+  Future<User?> getUserData(int id) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final savedUsername = prefs.getString('username');
-      final savedPassword = prefs.getString('password');
+      final db = await dbHelper.database;
+      final sql = "SELECT * FROM users WHERE id= ?";
+      var result = await db.rawQuery(sql, [id]);
+      if (result.isNotEmpty) {
+        final userData = result.first;
+        print(
+          "User data retrieved:'${userData['id']}' ,'${userData['username']},'${userData['region']}'', '${userData['province']}','${userData['municipality']} '",
+        );
 
-      if (savedUsername == null || savedPassword == null) {
-        return false;
+        return User(
+          id: userData['id'] as int,
+          firstName: userData['firstName']?.toString() ?? '',
+          lastName: userData['lastName']?.toString() ?? '',
+          username: userData['username']?.toString() ?? '',
+          password: userData['password']?.toString() ?? '',
+          region: userData['region']?.toString() ?? '',
+          province: userData['province']?.toString() ?? '',
+          municipality: userData['municipality']?.toString() ?? '',
+        );
       }
-
-      return username == savedUsername && password == savedPassword;
     } catch (e) {
-      return false;
+      print('Error retrieving user data: $e');
+      return null;
     }
   }
 
@@ -55,20 +85,7 @@ class AuthService {
     }
   }
 
-  static Future<Map<String, String?>> getUserData() async {
-    final prefs = await SharedPreferences.getInstance();
-    return {
-      'firstName': prefs.getString('firstName'),
-      'lastName': prefs.getString('lastName'),
-      'username': prefs.getString('username'),
-      'region': prefs.getString('region'),
-      'province': prefs.getString('province'),
-      'municipality': prefs.getString('municipality'),
-      'profile_image_path': prefs.getString('profile_image_path'),
-    };
-  }
-
-  static Future<void> logout() async {
+  Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('firstName');
     await prefs.remove('lastName');
@@ -76,6 +93,6 @@ class AuthService {
     await prefs.remove('password');
     await prefs.remove('region');
     await prefs.remove('province');
-    await prefs.remove('municipality');
+    await prefs.remove(' municipality');
   }
 }

@@ -20,7 +20,7 @@ class HeroLayoutCard extends StatelessWidget {
           fit: StackFit.expand,
           children: <Widget>[
             Image.network(
-              itemInfo.itemImage,
+              itemInfo.image,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return const Center(
@@ -49,7 +49,7 @@ class HeroLayoutCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      itemInfo.itemName,
+                      itemInfo.name,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -58,7 +58,7 @@ class HeroLayoutCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      itemInfo.itemType,
+                      itemInfo.type,
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.8),
                         fontSize: 14,
@@ -67,7 +67,7 @@ class HeroLayoutCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     if (itemInfo.onCarousel == false)
                       Text(
-                        'Php ${itemInfo.itemPrice.toStringAsFixed(2)}',
+                        'Php ${itemInfo.price.toStringAsFixed(2)}',
                         style: const TextStyle(
                           color: Colors.greenAccent,
                           fontSize: 18,
