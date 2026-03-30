@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../services/auth.dart';
+import 'package:provider/provider.dart';
+import '../providers/userprovider.dart';
 import '../widgets/forms.dart';
 
 class Login extends StatefulWidget {
@@ -23,11 +24,12 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> _login() async {
+    final login = Provider.of<UserProvider>(context, listen: false);
     if (!_formKey.currentState!.validate()) return;
 
-    final success = await AuthService.login(
-      username: _usernameController.text,
-      password: _passwordController.text,
+    final success = await login.login(
+      _usernameController.text,
+      _passwordController.text,
     );
 
     if (!context.mounted) return;

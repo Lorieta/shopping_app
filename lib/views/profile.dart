@@ -4,11 +4,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:shopping_app/providers/userprovider.dart';
 import '../services/auth.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:io';
-/**
-d
+import 'package:provider/provider.dart';
+
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -17,8 +18,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  File? _imageFile;
-
   Widget _buildActionItem(BuildContext context, IconData icon, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -30,102 +29,19 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  final ImagePicker _picker = ImagePicker();
-  String _firstName = "";
-  String _lastName = "";
-  String _username = "";
-
   @override
   void initState() {
     super.initState();
-    _loadSavedImage();
-  }
-
-  Future<void> _loadSavedImage() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedPath = prefs.getString('profile_image_path');
-    final userData = await AuthService.getUserData();
-
-    if (savedPath != null && File(savedPath).existsSync()) {
-      setState(() {
-        _imageFile = File(savedPath);
-      });
-    }
-
-    setState(() {
-      _firstName = userData['firstName'] ?? "";
-      _lastName = userData['lastName'] ?? "";
-      _username = userData['username'] ?? "";
-    });
-  }
-
-  Future<void> _pickImage(ImageSource source) async {
-    final permission = source == ImageSource.camera
-        ? Permission.camera
-        : Permission.photos;
-
-    // Check status FIRST — don't call .request() if permanently denied
-    var status = await permission.status;
-
-    if (status.isPermanentlyDenied) {
-      if (!mounted) return;
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Permission Required'),
-          content: const Text('Please enable it in app settings.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(ctx).pop();
-                openAppSettings();
-              },
-              child: const Text('Open Settings'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Cancel'),
-            ),
-          ],
-        ),
-      );
-      return;
-    }
-
-    // Safe to call .request() here — will show the OS prompt if needed
-    status = await permission.request();
-
-    if (status.isGranted) {
-      final picked = await _picker.pickImage(source: source);
-      if (picked != null) {
-        // Copy to app documents directory for persistence
-        final appDir = await getApplicationDocumentsDirectory();
-
-        // Use a unique timestamp to break Flutter's ImageCache which caches by file path
-        final timestamp = DateTime.now().millisecondsSinceEpoch;
-        final fileName = 'profile_$timestamp${p.extension(picked.path)}';
-        final savedFile = await File(
-          picked.path,
-        ).copy('${appDir.path}/$fileName');
-
-        // Delete the old file to save space
-        if (_imageFile != null && _imageFile!.existsSync()) {
-          try {
-            _imageFile!.deleteSync();
-          } catch (_) {}
-        }
-
-        // Save the path to SharedPreferences
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('profile_image_path', savedFile.path);
-
-        setState(() => _imageFile = savedFile);
-      }
-    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    String? imageFile = userProvider.user?['profilepic']?.toString();
+    String? firstName = userProvider.user?['firstName']?.toString();
+    String? lastName = userProvider.user?['lastName']?.toString();
+    String? username = userProvider.user?['username']?.toString();
+
     return Scaffold(
       appBar: AppBar(title: const Text('Profile')),
       body: Center(
@@ -140,48 +56,23 @@ class _ProfileState extends State<Profile> {
                 CircleAvatar(
                   radius: 48,
                   backgroundColor: Colors.grey.shade300,
-                  backgroundImage: _imageFile != null
-                      ? FileImage(_imageFile!)
+                  backgroundImage: imageFile != null
+                      ? FileImage(File(imageFile))
                       : null,
-                  child: _imageFile == null
+                  child: imageFile == null
                       ? const Icon(Icons.person, size: 48, color: Colors.grey)
                       : null,
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  '$_firstName $_lastName',
+                  '$firstName $lastName',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                Text(_username),
+                Text(username ?? ''),
                 const SizedBox(height: 24),
               ],
             ),
 
-            // Order Actions
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildActionItem(
-                    context,
-                    Icons.account_balance_wallet_outlined,
-                    'To Pay',
-                  ),
-                  _buildActionItem(
-                    context,
-                    Icons.inventory_2_outlined,
-                    'To Ship',
-                  ),
-                  _buildActionItem(
-                    context,
-                    Icons.local_shipping_outlined,
-                    'To Receive',
-                  ),
-                  _buildActionItem(context, Icons.star_border, 'To Rate'),
-                ],
-              ),
-            ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
               child: Divider(),
@@ -203,7 +94,4 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
 }
-
-*/

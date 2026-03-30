@@ -16,7 +16,7 @@ class _ItemGridState extends State<ItemGrid> {
   @override
   void initState() {
     super.initState();
-    _allItems = ItemService.loadItems();
+    _allItems = ItemService.loadItems().then((items) => items ?? []);
   }
 
   @override

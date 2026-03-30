@@ -185,7 +185,7 @@ class _SignupState extends State<Signup> {
                     text: 'Create Account',
                     onPressed: () async {
                       var user = User(
-                        username: _firstNameController.text,
+                        username: _usernameController.text,
                         password: _passwordController.text,
                         firstName: _firstNameController.text,
                         lastName: _lastNameController.text,

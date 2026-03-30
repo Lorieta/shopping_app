@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shopping_app/providers/userprovider.dart';
 import 'package:shopping_app/views/landing.dart';
 import 'package:shopping_app/views/login.dart';
 import 'package:shopping_app/views/signup.dart';
@@ -8,8 +9,7 @@ import 'package:shopping_app/views/home.dart';
 import 'package:shopping_app/widgets/navbar.dart';
 import 'package:shopping_app/views/deals.dart';
 import 'package:shopping_app/views/profile.dart';
-import 'package:shopping_app/views/shopping_cart.dart';
-import 'package:shopping_app/services/auth.dart';
+import 'package:shopping_app/views/cart.dart';
 import 'package:shopping_app/views/content.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/cartprovider.dart';
@@ -17,20 +17,30 @@ import 'services/database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final authService = AuthService();
-  final loggedIn = await authService.getUserData(1) != null;
+
   late final DatabaseHelper db = DatabaseHelper();
+
   await db.initDb(); // Ensure the database is initialized
   // Ensure the database connection is established
-  runApp(MyApp(isLoggedIn: loggedIn));
+  final userProvider = UserProvider();
+
+  await userProvider.restoreSession();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => CartModel()),
+      ],
+
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
-  MyApp({super.key, required this.isLoggedIn});
+  MyApp({super.key});
 
   late final GoRouter _router = GoRouter(
-    initialLocation: isLoggedIn ? '/home' : '/',
     routes: [
       // Auth pages — no bottom nav
       GoRoute(
@@ -48,10 +58,10 @@ class MyApp extends StatelessWidget {
       ShellRoute(
         builder: (context, state, child) => Navbar(child: child),
         routes: [
-          GoRoute(path: '/home', builder: (_, __) => const Home()),
-          GoRoute(path: '/deals', builder: (_, __) => const Deals()),
-          /*      GoRoute(path: '/profile', builder: (_, __) => const Profile()),*/
-          GoRoute(path: '/cart', builder: (_, __) => const ShoppingCart()),
+          GoRoute(path: '/home', builder: (_, _) => const Home()),
+          GoRoute(path: '/deals', builder: (_, _) => const Deals()),
+          GoRoute(path: '/profile', builder: (_, _) => const Profile()),
+          GoRoute(path: '/cart', builder: (_, _) => const ShoppingCart()),
         ],
       ),
     ],

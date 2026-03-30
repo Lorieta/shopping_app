@@ -25,27 +25,27 @@ class User {
     return {
       'id': id,
       'username': username,
-      'email': password,
-      'firstname': firstName,
-      'lastname': lastName,
+      'password': password,
+      'firstName': firstName,
+      'lastName': lastName,
       'profile_image_url': profileImageUrl,
       'region': region,
       'province': province,
-      ' municipality': municipality,
+      'municipality': municipality,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'],
-      username: map['username'],
-      password: map['password'],
-      firstName: map['firstname'],
-      lastName: map['lastname'],
-      profileImageUrl: map['profile_image_url'],
-      region: map['region'],
-      province: map['province'],
-      municipality: map['municipality'],
+      id: map['id'] as int?,
+      username: (map['username'] as String?)?.trim() ?? '',
+      password: (map['password'] as String?)?.trim() ?? '',
+      firstName: (map['firstName'] as String?)?.trim() ?? '',
+      lastName: (map['lastName'] as String?)?.trim() ?? '',
+      profileImageUrl: map['profile_image_url'] as String?,
+      region: (map['region'] as String?)?.trim() ?? '',
+      province: (map['province'] as String?)?.trim() ?? '',
+      municipality: (map['municipality'] as String?)?.trim() ?? '',
     );
   }
 }

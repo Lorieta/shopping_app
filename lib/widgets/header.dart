@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../services/auth.dart';
+import 'package:provider/provider.dart';
+import '../providers/userprovider.dart';
 
 class Header extends StatefulWidget {
   const Header({super.key});
@@ -10,20 +11,17 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
-  String _province = "";
-  String _municipality = "";
-  String? _profileImagePath;
-
   @override
   void initState() {
     super.initState();
-    _loadPreferences();
   }
-
-  Future<void> _loadPreferences() async {}
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    String? _profilePic = userProvider.user?['profile_image_url']?.toString();
+    String? _province = userProvider.user?['province']?.toString();
+    String? _municipality = userProvider.user?['municipality']?.toString();
     return Stack(
       children: [
         // Background / base layer (optional — add color or image here)
@@ -53,10 +51,10 @@ class _HeaderState extends State<Header> {
                         ),
                       ],
                     ),
-                    child: _profileImagePath != null
+                    child: (_profilePic?.isNotEmpty == true)
                         ? ClipOval(
                             child: Image.file(
-                              File(_profileImagePath!),
+                              File(_profilePic!),
                               width: 40,
                               height: 40,
                               fit: BoxFit.cover,
@@ -84,7 +82,7 @@ class _HeaderState extends State<Header> {
                         ),
                       ),
                       Text(
-                        '$_province, $_municipality',
+                        '${_province ?? 'Unknown'}, ${_municipality ?? ''}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,

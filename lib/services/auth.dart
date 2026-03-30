@@ -6,12 +6,11 @@ class AuthService {
   static DatabaseHelper dbHelper = DatabaseHelper();
 
   static Future<bool> registerUser(User user) async {
-    final db = await dbHelper.database;
     try {
       String sql =
           "INSERT INTO users (firstName, lastName, username, password, region, province,  municipality) VALUES (?, ?, ?, ?, ?, ?, ?)";
       final id = await dbHelper.database;
-      db.rawInsert(sql, [
+      id.rawInsert(sql, [
         user.firstName,
         user.lastName,
         user.username,
@@ -20,15 +19,14 @@ class AuthService {
         user.province,
         user.municipality,
       ]);
-      print('User registered: ${user.username}, ID: $id');
+
       return true;
     } catch (e) {
-      print('Error registering user: $e');
       rethrow;
     }
   }
 
-  static Future<bool> login({
+  static Future<User?> login({
     required String username,
     required String password,
   }) async {
@@ -38,24 +36,20 @@ class AuthService {
       [username, password],
     );
 
-    if (result.length > 0) {
-      print('User found: ${result.first['username']}');
-      return true;
+    if (result.isNotEmpty) {
+      return User.fromMap(Map<String, dynamic>.from(result.first));
     }
-    print('User not found');
-    return false;
+
+    return null;
   }
 
-  Future<User?> getUserData(int id) async {
+  static Future<User?> getUserData(int id) async {
     try {
       final db = await dbHelper.database;
       final sql = "SELECT * FROM users WHERE id= ?";
       var result = await db.rawQuery(sql, [id]);
       if (result.isNotEmpty) {
         final userData = result.first;
-        print(
-          "User data retrieved:'${userData['id']}' ,'${userData['username']},'${userData['region']}'', '${userData['province']}','${userData['municipality']} '",
-        );
 
         return User(
           id: userData['id'] as int,
@@ -68,8 +62,8 @@ class AuthService {
           municipality: userData['municipality']?.toString() ?? '',
         );
       }
+      return null;
     } catch (e) {
-      print('Error retrieving user data: $e');
       return null;
     }
   }
@@ -85,6 +79,7 @@ class AuthService {
     }
   }
 
+  /** 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('firstName');
@@ -95,4 +90,5 @@ class AuthService {
     await prefs.remove('province');
     await prefs.remove(' municipality');
   }
+  */
 }

@@ -30,7 +30,7 @@ class _ContentState extends State<Content> {
               width: double.infinity,
               height: 320,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
+              errorBuilder: (_, _, _) => Container(
                 width: double.infinity,
                 height: 320,
                 color: const Color.fromARGB(255, 255, 255, 255),

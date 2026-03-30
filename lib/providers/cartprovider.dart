@@ -5,34 +5,37 @@ import '../models/item.dart';
 class CartItem {
   final Item item;
   int quantity;
-
   CartItem({required this.item, required this.quantity});
-
   double get totalPrice => item.price * quantity;
 }
 
 class CartModel extends ChangeNotifier {
   final List<CartItem> _items = [];
 
-  UnmodifiableListView<CartItem> get items => UnmodifiableListView(_items);
-
+  // Getters
+  List<CartItem> get items => _items;
   double get totalPrice => _items.fold(0, (sum, item) => sum + item.totalPrice);
+  int get totalItems => _items.length;
 
+  // Add item to cart
   void addItems(Item item, int quantity) {
     final existing = _items.firstWhereOrNull((i) => i.item.id == item.id);
-    existing != null
-        ? existing.quantity += quantity
-        : _items.add(CartItem(item: item, quantity: quantity));
+
+    if (existing != null) {
+      existing.quantity += quantity;
+    } else {
+      _items.add(CartItem(item: item, quantity: quantity));
+    }
+
     notifyListeners();
   }
 
-  void removeItem(Item item) {
-    _items.removeWhere((i) => i.item.id == item.id);
-    notifyListeners();
-  }
-
+  // Update quantity
   void updateQuantity(Item item, int quantity) {
-    if (quantity <= 0) return removeItem(item);
+    if (quantity <= 0) {
+      removeItem(item);
+      return;
+    }
 
     final existing = _items.firstWhereOrNull((i) => i.item.id == item.id);
     if (existing != null) {
@@ -41,10 +44,15 @@ class CartModel extends ChangeNotifier {
     }
   }
 
+  // Remove single item
+  void removeItem(Item item) {
+    _items.removeWhere((i) => i.item.id == item.id);
+    notifyListeners();
+  }
+
+  // Clear cart
   void removeAll() {
     _items.clear();
     notifyListeners();
   }
-
-  int get totalItems => _items.length;
 }
