@@ -3,7 +3,7 @@ import 'database.dart';
 import '../models/user.dart';
 
 class AuthService {
-  static DatabaseHelper dbHelper = DatabaseHelper();
+  static DatabaseHelper dbHelper = DatabaseHelper.instance;
 
   static Future<bool> registerUser(User user) async {
     try {

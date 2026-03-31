@@ -11,10 +11,7 @@ import 'services/routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ThemeProvider.instance.changeTheme(ThemeEnum.Light);
-
-  late final DatabaseHelper db = DatabaseHelper();
-
-  await db.initDb();
+  await DatabaseHelper.instance.database;
 
   final userProvider = UserProvider();
   await userProvider.restoreSession();
