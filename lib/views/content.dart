@@ -18,6 +18,9 @@ class _ContentState extends State<Content> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -33,11 +36,11 @@ class _ContentState extends State<Content> {
               errorBuilder: (_, _, _) => Container(
                 width: double.infinity,
                 height: 320,
-                color: const Color.fromARGB(255, 255, 255, 255),
-                child: const Icon(
+                color: colorScheme.surface,
+                child: Icon(
                   Icons.broken_image,
                   size: 64,
-                  color: Colors.white54,
+                  color: colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
               ),
             ),
@@ -49,10 +52,10 @@ class _ContentState extends State<Content> {
                   // Price
                   Text(
                     'Php.${widget.item.price.toStringAsFixed(2)}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF0D585F),
+                      color: colorScheme.primary,
                     ),
                   ),
                   Text(
@@ -65,10 +68,10 @@ class _ContentState extends State<Content> {
                   const SizedBox(height: 24),
                   Text(
                     widget.item.description,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       height: 1.6,
-                      color: Colors.black87,
+                      color: colorScheme.onSurface.withValues(alpha: 0.87),
                     ),
                   ),
 

@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app/providers/themeprovider.dart';
 import '../providers/userprovider.dart';
 
 class Header extends StatefulWidget {
@@ -19,6 +21,7 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    ThemeProvider _themeProvider = Provider.of<ThemeProvider>(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     String? _profilePic = userProvider.user?['profile_image_url']?.toString();
@@ -38,6 +41,16 @@ class _HeaderState extends State<Header> {
               // Top row: avatar + location text
               Row(
                 children: [
+                  IconButton(
+                    onPressed: () {
+                      if (_themeProvider.currentTheme == ThemeEnum.Light) {
+                        _themeProvider.changeTheme(ThemeEnum.Dark);
+                      } else {
+                        _themeProvider.changeTheme(ThemeEnum.Light);
+                      }
+                    },
+                    icon: Icon(Icons.light_mode),
+                  ),
                   // Avatar circle
                   Container(
                     padding: const EdgeInsets.all(10),

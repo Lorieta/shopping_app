@@ -15,6 +15,7 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _rememberMe = false;
 
   @override
   void dispose() {
@@ -30,6 +31,7 @@ class _LoginState extends State<Login> {
     final success = await login.login(
       _usernameController.text,
       _passwordController.text,
+      rememberMe: _rememberMe,
     );
 
     if (!context.mounted) return;
@@ -45,6 +47,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final textTheme = Theme.of(context).textTheme;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     return Scaffold(
@@ -82,7 +86,7 @@ class _LoginState extends State<Login> {
                     'SIGN IN',
                     style: TextStyle(
                       fontSize: 14,
-                      color: colorScheme.onSurface.withOpacity(0.6),
+                      color: colorScheme.onSurface.withValues(alpha: 0.6),
                       letterSpacing: 2,
                     ),
                     textAlign: TextAlign.center,
@@ -103,7 +107,21 @@ class _LoginState extends State<Login> {
                     validator: (value) =>
                         value == null || value.isEmpty ? 'Required' : null,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _rememberMe,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            _rememberMe = value ?? false;
+                          });
+                        },
+                      ),
+                      Text("Remember Me", style: textTheme.bodyMedium),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
                   CustomPrimaryButton(onPressed: _login, text: 'Login'),
                   const SizedBox(height: 16),
                   TextButton(
@@ -113,7 +131,7 @@ class _LoginState extends State<Login> {
                     child: Text(
                       'Don\'t have an account? Sign Up',
                       style: TextStyle(
-                        color: colorScheme.onSurface.withOpacity(0.6),
+                        color: colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                     ),
                   ),

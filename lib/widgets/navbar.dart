@@ -23,14 +23,17 @@ class Navbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final current = _currentIndex(context);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
       body: child,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.surface,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
+              color: colorScheme.shadow.withValues(alpha: 0.08),
               blurRadius: 16,
               offset: const Offset(0, -2),
             ),
@@ -48,7 +51,9 @@ class Navbar extends StatelessWidget {
 
                 Widget iconWidget = Icon(
                   tab.icon,
-                  color: isSelected ? Colors.white : Colors.black54,
+                  color: isSelected
+                      ? colorScheme.onPrimary
+                      : colorScheme.onSurface.withValues(alpha: 0.6),
                   size: 24,
                 );
 
@@ -59,7 +64,7 @@ class Navbar extends StatelessWidget {
                       if (count == 0) return child!;
                       return Badge.count(
                         count: count,
-                        backgroundColor: Colors.redAccent,
+                        backgroundColor: colorScheme.error,
                         child: child,
                       );
                     },
@@ -82,7 +87,7 @@ class Navbar extends StatelessWidget {
                           height: 32,
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? const Color(0xFFB4D9CC)
+                                ? colorScheme.primaryContainer
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -94,8 +99,8 @@ class Navbar extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 11,
                             color: isSelected
-                                ? const Color(0xFF0D585F)
-                                : Colors.black54,
+                                ? colorScheme.primary
+                                : colorScheme.onSurface.withValues(alpha: 0.6),
                             fontWeight: isSelected
                                 ? FontWeight.w600
                                 : FontWeight.normal,

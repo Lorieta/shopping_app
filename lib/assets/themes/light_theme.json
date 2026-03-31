@@ -7,49 +7,49 @@
       "brightness": "light",
       "error": "#ffba1a1a",
       "errorContainer": "#ffffdad6",
-      "inversePrimary": "#ff83d5c5",
+      "inversePrimary": "#ff81d5cb",
       "inverseSurface": "#ff2b3230",
       "onError": "#ffffffff",
       "onErrorContainer": "#ff410002",
-      "onInverseSurface": "#ffecf2ef",
-      "onPrimaryFixed": "#ff00201b",
-      "onPrimary": "#fff9f9f9",
-      "onPrimaryContainer": "#ff00201b",
-      "onPrimaryFixedVariant": "#ff005046",
+      "onInverseSurface": "#ffecf2f0",
+      "onPrimaryFixed": "#ff00201d",
+      "onPrimary": "#ffffffff",
+      "onPrimaryContainer": "#ff00201d",
+      "onPrimaryFixedVariant": "#ff00504a",
       "onSecondary": "#ffffffff",
-      "onSecondaryContainer": "#ff06201b",
-      "onSecondaryFixed": "#ff06201b",
-      "onSecondaryFixedVariant": "#ff334b46",
-      "onSurface": "#ff171d1b",
-      "onSurfaceVariant": "#ff3f4946",
+      "onSecondaryContainer": "#ff051f1d",
+      "onSecondaryFixed": "#ff051f1d",
+      "onSecondaryFixedVariant": "#ff324b48",
+      "onSurface": "#ff161d1c",
+      "onSurfaceVariant": "#ff3f4947",
       "onTertiary": "#ffffffff",
-      "onTertiaryContainer": "#ff001e30",
-      "onTertiaryFixed": "#ff001e30",
-      "onTertiaryFixedVariant": "#ff2c4a60",
-      "outline": "#ff6f7976",
-      "outlineVariant": "#ffbec9c5",
-      "primary": "#ff006b5e",
-      "primaryContainer": "#ff9ff2e1",
-      "primaryFixed": "#ff9ff2e1",
-      "primaryFixedDim": "#ff83d5c5",
+      "onTertiaryContainer": "#ff001d32",
+      "onTertiaryFixed": "#ff001d32",
+      "onTertiaryFixedVariant": "#ff2f4961",
+      "outline": "#ff6f7977",
+      "outlineVariant": "#ffbec9c6",
+      "primary": "#ff006a62",
+      "primaryContainer": "#ff9df2e7",
+      "primaryFixed": "#ff9df2e7",
+      "primaryFixedDim": "#ff81d5cb",
       "scrim": "#ff000000",
-      "secondary": "#ff4a635e",
-      "secondaryContainer": "#ffcde8e1",
+      "secondary": "#ff4a6360",
+      "secondaryContainer": "#ffcce8e3",
       "surfaceBright": "#fff4fbf8",
-      "surfaceContainer": "#ffe9efec",
-      "surfaceContainerHigh": "#ffe3eae6",
-      "surfaceContainerHighest": "#ffdee4e1",
-      "secondaryFixed": "#ffcde8e1",
-      "secondaryFixedDim": "#ffb1ccc5",
+      "surfaceContainer": "#ffe9efed",
+      "surfaceContainerHigh": "#ffe3eae7",
+      "surfaceContainerHighest": "#ffdde4e2",
+      "secondaryFixed": "#ffcce8e3",
+      "secondaryFixedDim": "#ffb1ccc7",
       "shadow": "#ff000000",
       "surface": "#fff4fbf8",
-      "surfaceContainerLow": "#ffeff5f2",
+      "surfaceContainerLow": "#ffeff5f3",
       "surfaceContainerLowest": "#ffffffff",
-      "surfaceDim": "#ffd5dbd8",
-      "tertiary": "#ff446279",
-      "tertiaryContainer": "#ffcae6ff",
-      "tertiaryFixed": "#ffcae6ff",
-      "tertiaryFixedDim": "#ffaccae5"
+      "surfaceDim": "#ffd5dbd9",
+      "tertiary": "#ff47617a",
+      "tertiaryContainer": "#ffcee5ff",
+      "tertiaryFixed": "#ffcee5ff",
+      "tertiaryFixedDim": "#ffaec9e6"
     },
     "height": 36,
     "layoutBehavior": "padded",
@@ -100,52 +100,52 @@
     "brightness": "light",
     "error": "#ffba1a1a",
     "errorContainer": "#ffffdad6",
-    "inversePrimary": "#ff83d5c5",
+    "inversePrimary": "#ff81d5cb",
     "inverseSurface": "#ff2b3230",
     "onError": "#ffffffff",
     "onErrorContainer": "#ff410002",
-    "onInverseSurface": "#ffecf2ef",
-    "onPrimaryFixed": "#ff00201b",
-    "onPrimary": "#fff9f9f9",
-    "onPrimaryContainer": "#ff00201b",
-    "onPrimaryFixedVariant": "#ff005046",
+    "onInverseSurface": "#ffecf2f0",
+    "onPrimaryFixed": "#ff00201d",
+    "onPrimary": "#ffffffff",
+    "onPrimaryContainer": "#ff00201d",
+    "onPrimaryFixedVariant": "#ff00504a",
     "onSecondary": "#ffffffff",
-    "onSecondaryContainer": "#ff06201b",
-    "onSecondaryFixed": "#ff06201b",
-    "onSecondaryFixedVariant": "#ff334b46",
-    "onSurface": "#ff171d1b",
-    "onSurfaceVariant": "#ff3f4946",
+    "onSecondaryContainer": "#ff051f1d",
+    "onSecondaryFixed": "#ff051f1d",
+    "onSecondaryFixedVariant": "#ff324b48",
+    "onSurface": "#ff161d1c",
+    "onSurfaceVariant": "#ff3f4947",
     "onTertiary": "#ffffffff",
-    "onTertiaryContainer": "#ff001e30",
-    "onTertiaryFixed": "#ff001e30",
-    "onTertiaryFixedVariant": "#ff2c4a60",
-    "outline": "#ff6f7976",
-    "outlineVariant": "#ffbec9c5",
-    "primary": "#ff006b5e",
-    "primaryContainer": "#ff9ff2e1",
-    "primaryFixed": "#ff9ff2e1",
-    "primaryFixedDim": "#ff83d5c5",
+    "onTertiaryContainer": "#ff001d32",
+    "onTertiaryFixed": "#ff001d32",
+    "onTertiaryFixedVariant": "#ff2f4961",
+    "outline": "#ff6f7977",
+    "outlineVariant": "#ffbec9c6",
+    "primary": "#ff006a62",
+    "primaryContainer": "#ff9df2e7",
+    "primaryFixed": "#ff9df2e7",
+    "primaryFixedDim": "#ff81d5cb",
     "scrim": "#ff000000",
-    "secondary": "#ff4a635e",
-    "secondaryContainer": "#ffcde8e1",
+    "secondary": "#ff4a6360",
+    "secondaryContainer": "#ffcce8e3",
     "surfaceBright": "#fff4fbf8",
-    "surfaceContainer": "#ffe9efec",
-    "surfaceContainerHigh": "#ffe3eae6",
-    "surfaceContainerHighest": "#ffdee4e1",
-    "secondaryFixed": "#ffcde8e1",
-    "secondaryFixedDim": "#ffb1ccc5",
+    "surfaceContainer": "#ffe9efed",
+    "surfaceContainerHigh": "#ffe3eae7",
+    "surfaceContainerHighest": "#ffdde4e2",
+    "secondaryFixed": "#ffcce8e3",
+    "secondaryFixedDim": "#ffb1ccc7",
     "shadow": "#ff000000",
     "surface": "#fff4fbf8",
-    "surfaceContainerLow": "#ffeff5f2",
+    "surfaceContainerLow": "#ffeff5f3",
     "surfaceContainerLowest": "#ffffffff",
-    "surfaceDim": "#ffd5dbd8",
-    "tertiary": "#ff446279",
-    "tertiaryContainer": "#ffcae6ff",
-    "tertiaryFixed": "#ffcae6ff",
-    "tertiaryFixedDim": "#ffaccae5"
+    "surfaceDim": "#ffd5dbd9",
+    "tertiary": "#ff47617a",
+    "tertiaryContainer": "#ffcee5ff",
+    "tertiaryFixed": "#ffcee5ff",
+    "tertiaryFixedDim": "#ffaec9e6"
   },
   "disabledColor": "#61000000",
-  "dividerColor": "#1f171d1b",
+  "dividerColor": "#1f161d1c",
   "focusColor": "#1f000000",
   "highlightColor": "#66bcbcbc",
   "hintColor": "#99000000",
@@ -163,7 +163,7 @@
   },
   "materialTapTargetSize": "shrinkWrap",
   "platform": "linux",
-  "primaryColor": "#ff006b5e",
+  "primaryColor": "#ff006a62",
   "primaryColorDark": "#ff1976d2",
   "primaryColorLight": "#ffbbdefb",
   "primaryIconTheme": {
@@ -448,9 +448,9 @@
   "splashFactory": "ripple",
   "textTheme": {
     "bodyLarge": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -466,9 +466,9 @@
       "textBaseline": "alphabetic"
     },
     "bodyMedium": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -484,9 +484,9 @@
       "textBaseline": "alphabetic"
     },
     "bodySmall": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -502,9 +502,9 @@
       "textBaseline": "alphabetic"
     },
     "displayLarge": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -520,9 +520,9 @@
       "textBaseline": "alphabetic"
     },
     "displayMedium": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -538,9 +538,9 @@
       "textBaseline": "alphabetic"
     },
     "displaySmall": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -556,9 +556,9 @@
       "textBaseline": "alphabetic"
     },
     "headlineLarge": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -574,9 +574,9 @@
       "textBaseline": "alphabetic"
     },
     "headlineMedium": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -592,9 +592,9 @@
       "textBaseline": "alphabetic"
     },
     "headlineSmall": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -610,9 +610,9 @@
       "textBaseline": "alphabetic"
     },
     "labelLarge": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -628,9 +628,9 @@
       "textBaseline": "alphabetic"
     },
     "labelMedium": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -646,9 +646,9 @@
       "textBaseline": "alphabetic"
     },
     "labelSmall": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -664,9 +664,9 @@
       "textBaseline": "alphabetic"
     },
     "titleLarge": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -682,9 +682,9 @@
       "textBaseline": "alphabetic"
     },
     "titleMedium": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -700,9 +700,9 @@
       "textBaseline": "alphabetic"
     },
     "titleSmall": {
-      "color": "#ff171d1b",
+      "color": "#ff161d1c",
       "decoration": "none",
-      "decorationColor": "#ff171d1b",
+      "decorationColor": "#ff161d1c",
       "fontFamily": "Roboto",
       "fontFamilyFallback": [
         "Ubuntu",
@@ -721,9 +721,9 @@
   "typography": {
     "black": {
       "bodyLarge": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -735,9 +735,9 @@
         "inherit": true
       },
       "bodyMedium": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -749,9 +749,9 @@
         "inherit": true
       },
       "bodySmall": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -763,9 +763,9 @@
         "inherit": true
       },
       "displayLarge": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -777,9 +777,9 @@
         "inherit": true
       },
       "displayMedium": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -791,9 +791,9 @@
         "inherit": true
       },
       "displaySmall": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -805,9 +805,9 @@
         "inherit": true
       },
       "headlineLarge": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -819,9 +819,9 @@
         "inherit": true
       },
       "headlineMedium": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -833,9 +833,9 @@
         "inherit": true
       },
       "headlineSmall": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -847,9 +847,9 @@
         "inherit": true
       },
       "labelLarge": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -861,9 +861,9 @@
         "inherit": true
       },
       "labelMedium": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -875,9 +875,9 @@
         "inherit": true
       },
       "labelSmall": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -889,9 +889,9 @@
         "inherit": true
       },
       "titleLarge": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -903,9 +903,9 @@
         "inherit": true
       },
       "titleMedium": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",
@@ -917,9 +917,9 @@
         "inherit": true
       },
       "titleSmall": {
-        "color": "#ff171d1b",
+        "color": "#ff161d1c",
         "decoration": "none",
-        "decorationColor": "#ff171d1b",
+        "decorationColor": "#ff161d1c",
         "fontFamily": "Roboto",
         "fontFamilyFallback": [
           "Ubuntu",

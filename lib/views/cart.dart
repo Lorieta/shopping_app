@@ -21,7 +21,7 @@ class ShoppingCart extends StatelessWidget {
                   fontSize: 18,
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface.withOpacity(0.6),
+                  ).colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
               ),
             );
@@ -52,12 +52,12 @@ class ShoppingCart extends StatelessWidget {
                               color: Theme.of(context)
                                   .colorScheme
                                   .surfaceContainerHighest
-                                  .withOpacity(0.5),
+                                  .withValues(alpha: 0.5),
                               child: Icon(
                                 Icons.broken_image,
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onSurface.withOpacity(0.3),
+                                ).colorScheme.onSurface.withValues(alpha: 0.3),
                               ),
                             ),
                           ),
@@ -90,14 +90,16 @@ class ShoppingCart extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () => cart.removeItem(cartItem.item),
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.delete_outline,
-                                color: Colors.redAccent,
+                                color: Theme.of(context).colorScheme.error,
                               ),
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade100,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.surfaceContainerHighest,
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Row(
@@ -145,7 +147,7 @@ class ShoppingCart extends StatelessWidget {
                     BoxShadow(
                       color: Theme.of(
                         context,
-                      ).colorScheme.shadow.withOpacity(0.05),
+                      ).colorScheme.shadow.withValues(alpha: 0.05),
                       blurRadius: 10,
                       offset: const Offset(0, -4),
                     ),
@@ -164,7 +166,7 @@ class ShoppingCart extends StatelessWidget {
                               fontSize: 18,
                               color: Theme.of(
                                 context,
-                              ).colorScheme.onSurface.withOpacity(0.6),
+                              ).colorScheme.onSurface.withValues(alpha: 0.6),
                             ),
                           ),
                           Text(

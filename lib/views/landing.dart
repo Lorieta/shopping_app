@@ -85,8 +85,12 @@ class _LandingState extends State<Landing> {
                       child: ElevatedButton(
                         onPressed: () => context.go('/login'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF0D585F),
-                          foregroundColor: Colors.white,
+                          backgroundColor: Theme.of(
+                            context,
+                          ).colorScheme.primary,
+                          foregroundColor: Theme.of(
+                            context,
+                          ).colorScheme.onPrimary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(28),
                           ),

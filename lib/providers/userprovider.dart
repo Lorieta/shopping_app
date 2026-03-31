@@ -14,7 +14,11 @@ class UserProvider extends ChangeNotifier {
   Map<String, dynamic>? get user => _user;
   bool get isLoggedIn => _isLoggedIn;
 
-  Future<bool> login(String username, String password) async {
+  Future<bool> login(
+    String username,
+    String password, {
+    bool rememberMe = false,
+  }) async {
     var login = await AuthService.login(username: username, password: password);
 
     if (login != null) {
@@ -23,8 +27,14 @@ class UserProvider extends ChangeNotifier {
       _isLoggedIn = true;
 
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('id', _id!);
-      await prefs.setString('user', jsonEncode(_user));
+      if (rememberMe) {
+        await prefs.setInt('id', _id!);
+        await prefs.setString('user', jsonEncode(_user));
+      } else {
+        // Clear any existing saved session if not remembering
+        await prefs.remove('id');
+        await prefs.remove('user');
+      }
 
       notifyListeners();
       return _isLoggedIn;

@@ -10,7 +10,10 @@ import 'package:shopping_app/views/signup.dart';
 import 'package:shopping_app/widgets/navbar.dart';
 
 class Routes {
+  final String initialLocation;
+  Routes({this.initialLocation = '/'});
   late final GoRouter _router = GoRouter(
+    initialLocation: initialLocation,
     routes: [
       // Auth pages — no bottom nav
       GoRoute(
