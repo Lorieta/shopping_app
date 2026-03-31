@@ -45,6 +45,8 @@ dependencies:
   provider: ^6.1.5+1
   path_provider: ^2.1.5
   collection: ^1.19.1
+  another_flushbar: ^1.12.32
+  json_theme: ^11.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -71,6 +73,8 @@ flutter:
   assets:
   - lib/assets/images/logo.png
   - lib/assets/images/landing.jpg
+  - lib/assets/themes/dark_theme.json
+  - lib/assets/themes/light_theme.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

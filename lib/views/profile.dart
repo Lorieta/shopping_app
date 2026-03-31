@@ -37,6 +37,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    final colorScheme = Theme.of(context).colorScheme;
     String? imageFile = userProvider.user?['profilepic']?.toString();
     String? firstName = userProvider.user?['firstName']?.toString();
     String? lastName = userProvider.user?['lastName']?.toString();
@@ -55,12 +56,16 @@ class _ProfileState extends State<Profile> {
                 // Profile Icon
                 CircleAvatar(
                   radius: 48,
-                  backgroundColor: Colors.grey.shade300,
+                  backgroundColor: colorScheme.surfaceContainerHighest,
                   backgroundImage: imageFile != null
                       ? FileImage(File(imageFile))
                       : null,
                   child: imageFile == null
-                      ? const Icon(Icons.person, size: 48, color: Colors.grey)
+                      ? Icon(
+                          Icons.person,
+                          size: 48,
+                          color: colorScheme.onSurface.withOpacity(0.4),
+                        )
                       : null,
                 ),
                 const SizedBox(height: 16),

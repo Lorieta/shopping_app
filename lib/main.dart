@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shopping_app/providers/userprovider.dart';
-import 'package:shopping_app/views/landing.dart';
-import 'package:shopping_app/views/login.dart';
-import 'package:shopping_app/views/signup.dart';
-import 'package:go_router/go_router.dart';
-import 'package:shopping_app/views/home.dart';
-import 'package:shopping_app/widgets/navbar.dart';
-import 'package:shopping_app/views/deals.dart';
-import 'package:shopping_app/views/profile.dart';
-import 'package:shopping_app/views/cart.dart';
-import 'package:shopping_app/views/content.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/cartprovider.dart';
 import 'services/database.dart';
+import 'services/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  final routes = Routes();
   late final DatabaseHelper db = DatabaseHelper();
 
   await db.initDb(); // Ensure the database is initialized
@@ -32,40 +24,15 @@ void main() async {
         ChangeNotifierProvider(create: (_) => CartModel()),
       ],
 
-      child: MyApp(),
+      child: MyApp(router: routes.router),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  final GoRouter router;
 
-  late final GoRouter _router = GoRouter(
-    routes: [
-      // Auth pages — no bottom nav
-      GoRoute(
-        path: '/content',
-        builder: (context, state) {
-          final item = state.extra as dynamic;
-          return Content(item: item);
-        },
-      ),
-      GoRoute(path: '/', builder: (context, state) => const Landing()),
-      GoRoute(path: '/login', builder: (context, state) => const Login()),
-      GoRoute(path: '/signup', builder: (context, state) => const Signup()),
-
-      // Shell — bottom nav wraps these routes
-      ShellRoute(
-        builder: (context, state, child) => Navbar(child: child),
-        routes: [
-          GoRoute(path: '/home', builder: (_, _) => const Home()),
-          GoRoute(path: '/deals', builder: (_, _) => const Deals()),
-          GoRoute(path: '/profile', builder: (_, _) => const Profile()),
-          GoRoute(path: '/cart', builder: (_, _) => const ShoppingCart()),
-        ],
-      ),
-    ],
-  );
+  MyApp({Key? key, required this.router}) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -74,8 +41,18 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         title: 'Embedix',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0D585F)),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 0, 234, 255),
+            brightness: Brightness.light,
+          ),
         ),
+        darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 0, 234, 255),
+            brightness: Brightness.dark,
+          ),
+        ),
+        themeMode: ThemeMode.system,
         builder: (context, child) => ResponsiveBreakpoints.builder(
           child: child!,
           breakpoints: const [
@@ -85,7 +62,7 @@ class MyApp extends StatelessWidget {
             Breakpoint(start: 1921, end: double.infinity, name: '4K'),
           ],
         ),
-        routerConfig: _router,
+        routerConfig: router,
       ),
     );
   }

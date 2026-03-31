@@ -45,8 +45,10 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       body: Center(
         child: SingleChildScrollView(
           child: Form(
@@ -66,21 +68,21 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
+                  Text(
                     'Embedix',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF0D585F),
+                      color: colorScheme.primary,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  Text(
                     'SIGN IN',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey,
+                      color: colorScheme.onSurface.withOpacity(0.6),
                       letterSpacing: 2,
                     ),
                     textAlign: TextAlign.center,
@@ -108,9 +110,11 @@ class _LoginState extends State<Login> {
                     onPressed: () {
                       context.push('/signup');
                     },
-                    child: const Text(
+                    child: Text(
                       'Don\'t have an account? Sign Up',
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(
+                        color: colorScheme.onSurface.withOpacity(0.6),
+                      ),
                     ),
                   ),
                 ],

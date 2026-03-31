@@ -14,10 +14,15 @@ class ShoppingCart extends StatelessWidget {
           final items = cart.items;
 
           if (items.isEmpty) {
-            return const Center(
+            return Center(
               child: Text(
                 'Your cart is empty',
-                style: TextStyle(fontSize: 18, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withOpacity(0.6),
+                ),
               ),
             );
           }
@@ -44,8 +49,16 @@ class ShoppingCart extends StatelessWidget {
                             errorBuilder: (_, __, ___) => Container(
                               width: 80,
                               height: 80,
-                              color: Colors.grey.shade200,
-                              child: const Icon(Icons.broken_image),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .surfaceContainerHighest
+                                  .withOpacity(0.5),
+                              child: Icon(
+                                Icons.broken_image,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withOpacity(0.3),
+                              ),
                             ),
                           ),
                         ),
@@ -64,8 +77,8 @@ class ShoppingCart extends StatelessWidget {
                               const SizedBox(height: 4),
                               Text(
                                 '\Php. ${cartItem.item.price.toStringAsFixed(2)}',
-                                style: const TextStyle(
-                                  color: Color(0xFF0D585F),
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -127,10 +140,12 @@ class ShoppingCart extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.shadow.withOpacity(0.05),
                       blurRadius: 10,
                       offset: const Offset(0, -4),
                     ),
@@ -143,15 +158,21 @@ class ShoppingCart extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Total',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurface.withOpacity(0.6),
+                            ),
                           ),
                           Text(
                             '\Php. ${cart.totalPrice.toStringAsFixed(2)}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                         ],

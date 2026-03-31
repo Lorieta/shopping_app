@@ -18,16 +18,18 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
+        labelStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide.none,
         ),
         filled: true,
-        fillColor: Colors.grey[200],
+        fillColor: colorScheme.surfaceContainerHighest.withOpacity(0.5),
       ),
       obscureText: obscureText,
       validator: validator,
@@ -43,9 +45,10 @@ class CustomDropdownWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: colorScheme.surfaceContainerHighest.withOpacity(0.5),
         borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -66,17 +69,18 @@ class CustomPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 3, 209, 158),
+        backgroundColor: colorScheme.primary,
         padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       onPressed: onPressed,
       child: Text(
         text,
-        style: const TextStyle(
-          color: Color.fromARGB(255, 255, 255, 255),
+        style: TextStyle(
+          color: colorScheme.onPrimary,
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),

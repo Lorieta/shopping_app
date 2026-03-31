@@ -13,24 +13,40 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(padding: EdgeInsets.only(top: 30.0), child: Header()),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
             child: Text(
               'Hot items',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w300,
+                color: colorScheme.onSurface,
+              ),
             ),
           ),
           const Carousel(),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
             child: Text(
               'New arrivals',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w300,
+                color: colorScheme.onSurface,
+              ),
             ),
           ),
           const ItemGrid(),

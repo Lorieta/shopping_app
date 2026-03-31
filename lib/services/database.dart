@@ -36,7 +36,6 @@ class DatabaseHelper {
     )
   ''');
 
-    // items table (SQLite-safe types + correct column names)
     await db.execute('''
     CREATE TABLE items (
       itemId TEXT PRIMARY KEY,

@@ -7,19 +7,8 @@ class AuthService {
 
   static Future<bool> registerUser(User user) async {
     try {
-      String sql =
-          "INSERT INTO users (firstName, lastName, username, password, region, province,  municipality) VALUES (?, ?, ?, ?, ?, ?, ?)";
       final id = await dbHelper.database;
-      id.rawInsert(sql, [
-        user.firstName,
-        user.lastName,
-        user.username,
-        user.password,
-        user.region,
-        user.province,
-        user.municipality,
-      ]);
-
+      id.insert('users', user.toMap());
       return true;
     } catch (e) {
       rethrow;
@@ -31,16 +20,18 @@ class AuthService {
     required String password,
   }) async {
     final db = await dbHelper.database;
-    var result = await db.rawQuery(
-      "SELECT * FROM users WHERE username = ? and password = ?",
-      [username, password],
-    );
+    try {
+      var result = await db.rawQuery(
+        "SELECT * FROM users WHERE username = ? and password = ?",
+        [username, password],
+      );
 
-    if (result.isNotEmpty) {
-      return User.fromMap(Map<String, dynamic>.from(result.first));
+      if (result.isNotEmpty) {
+        return User.fromMap(Map<String, dynamic>.from(result.first));
+      }
+    } catch (err) {
+      return null;
     }
-
-    return null;
   }
 
   static Future<User?> getUserData(int id) async {
@@ -50,17 +41,7 @@ class AuthService {
       var result = await db.rawQuery(sql, [id]);
       if (result.isNotEmpty) {
         final userData = result.first;
-
-        return User(
-          id: userData['id'] as int,
-          firstName: userData['firstName']?.toString() ?? '',
-          lastName: userData['lastName']?.toString() ?? '',
-          username: userData['username']?.toString() ?? '',
-          password: userData['password']?.toString() ?? '',
-          region: userData['region']?.toString() ?? '',
-          province: userData['province']?.toString() ?? '',
-          municipality: userData['municipality']?.toString() ?? '',
-        );
+        return User.fromMap(Map<String, dynamic>.from(userData));
       }
       return null;
     } catch (e) {

@@ -35,17 +35,22 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Create Account', style: TextStyle(fontSize: 16)),
-        backgroundColor: Colors.white,
+        title: Text(
+          'Create Account',
+          style: TextStyle(fontSize: 16, color: colorScheme.onSurface),
+        ),
+        backgroundColor: colorScheme.surface,
         elevation: 0,
-        foregroundColor: Colors.black,
+        foregroundColor: colorScheme.onSurface,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -66,21 +71,21 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
+                  Text(
                     'Embedix',
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF0D585F),
+                      color: colorScheme.primary,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  Text(
                     'CREATE ACCOUNT',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.grey,
+                      color: colorScheme.onSurface.withOpacity(0.6),
                       letterSpacing: 2,
                     ),
                     textAlign: TextAlign.center,
