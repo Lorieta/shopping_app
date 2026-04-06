@@ -41,16 +41,6 @@ class _HeaderState extends State<Header> {
               // Top row: avatar + location text
               Row(
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      if (_themeProvider.currentTheme == ThemeEnum.Light) {
-                        _themeProvider.changeTheme(ThemeEnum.Dark);
-                      } else {
-                        _themeProvider.changeTheme(ThemeEnum.Light);
-                      }
-                    },
-                    icon: Icon(Icons.light_mode),
-                  ),
                   // Avatar circle
                   Container(
                     padding: const EdgeInsets.all(10),
