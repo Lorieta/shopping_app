@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import '../models/item.dart';
-import '../services/item.dart';
+import '../models/item.dart.bak';
+import '../services/item.dart.bak';
 import 'card.dart';
 
 class Carousel extends StatefulWidget {
