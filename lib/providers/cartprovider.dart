@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:collection/collection.dart';
-import '../models/item.dart.bak';
+import '../models/item.dart';
 
 class CartItem {
   final Item item;

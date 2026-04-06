@@ -5,7 +5,7 @@ import 'package:shopping_app/providers/themeprovider.dart';
 import 'package:shopping_app/providers/userprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/cartprovider.dart';
-import 'services/database.dart.bak';
+import './classes/database.dart';
 import 'classes/routes.dart';
 
 void main() async {
@@ -14,10 +14,9 @@ void main() async {
   await DatabaseHelper.instance.database;
 
   final userProvider = UserProvider();
-  await userProvider.restoreSession();
 
   final routes = Routes(
-    initialLocation: userProvider.isLoggedIn ? '/home' : '/',
+    // initialLocation: userProvider.isLoggedIn ? '/home' : '/',
   );
 
   runApp(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/item.dart.bak';
-import '../services/item.dart.bak';
+import '../models/item.dart';
+import '../services/items_service.dart';
 import 'card.dart';
 
 class ItemGrid extends StatefulWidget {
@@ -16,7 +16,7 @@ class _ItemGridState extends State<ItemGrid> {
   @override
   void initState() {
     super.initState();
-    _allItems = ItemService.loadItems().then((items) => items ?? []);
+    _allItems = ItemService().fetchData().then((items) => items ?? []);
   }
 
   @override
@@ -32,7 +32,7 @@ class _ItemGridState extends State<ItemGrid> {
           return const Center(child: Text('No items found'));
         }
 
-        final items = snapshot.data!.where((item) => !item.onCarousel).toList();
+        final items = snapshot.data!;
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: GridView.builder(

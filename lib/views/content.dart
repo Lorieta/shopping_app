@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/item.dart.bak';
+import '../models/item.dart';
 import '../providers/cartprovider.dart';
 import '../widgets/spanner.dart';
 
@@ -29,7 +29,7 @@ class _ContentState extends State<Content> {
 
           children: [
             Image.network(
-              widget.item.image,
+              widget.item.thumbnail,
               width: double.infinity,
               height: 320,
               fit: BoxFit.cover,
@@ -59,7 +59,7 @@ class _ContentState extends State<Content> {
                     ),
                   ),
                   Text(
-                    widget.item.name,
+                    widget.item.title,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

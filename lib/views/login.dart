@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    Provider.of<UserProvider>(context, listen: false);
     final textTheme = Theme.of(context).textTheme;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;

@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'database.dart.bak';
+import '../classes/database.dart';
 import '../models/user.dart';
 
 class AuthService {
@@ -32,6 +32,7 @@ class AuthService {
     } catch (err) {
       return null;
     }
+    return null;
   }
 
   static Future<User?> getUserData(int id) async {

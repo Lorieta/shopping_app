@@ -18,14 +18,24 @@ class Item {
   final String category;
 
   Map<String, dynamic> toJson() {
-    return {'id': id, 'title': title, 'thumbnail': thumbnail};
+    return {
+      'id': id,
+      'title': title,
+      'price': price,
+      'thumbnail': thumbnail,
+      'description': description,
+      'category': category,
+    };
   }
 
   factory Item.fromJson(Map<String, dynamic> map) {
     return Item(
       id: map['id'] as int,
       title: map['title'] as String,
+      price: map['price'] as double,
       thumbnail: map['thumbnail'] as String,
+      description: map['description'] as String,
+      category: map['category'] as String,
     );
   }
 }

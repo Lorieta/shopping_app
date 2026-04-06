@@ -42,7 +42,7 @@ class ShoppingCart extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.network(
-                            cartItem.item.image,
+                            cartItem.item.thumbnail,
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,
@@ -68,7 +68,7 @@ class ShoppingCart extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                cartItem.item.name,
+                                cartItem.item.title,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,

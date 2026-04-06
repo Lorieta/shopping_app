@@ -5,7 +5,6 @@ import 'package:shopping_app/providers/userprovider.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:io';
 import 'package:provider/provider.dart';
-import 'package:shopping_app/widgets/header.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -15,17 +14,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Widget _buildActionItem(BuildContext context, IconData icon, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, size: 32),
-        const SizedBox(height: 8),
-        Text(label, style: Theme.of(context).textTheme.bodyMedium),
-      ],
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -90,7 +78,7 @@ class _ProfileState extends State<Profile> {
                     '$firstName $lastName',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  Text('@$username' ?? ''),
+                  Text('@$username'),
                 ],
               ),
             ),
