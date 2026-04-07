@@ -8,7 +8,7 @@ class AuthService {
   static Future<bool> registerUser(User user) async {
     try {
       final id = await dbHelper.database;
-      id.insert('users', user.toMap());
+      await id.insert('users', user.toMap());
       return true;
     } catch (e) {
       rethrow;
@@ -61,7 +61,6 @@ class AuthService {
     }
   }
 
-  /** 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('firstName');
@@ -72,5 +71,4 @@ class AuthService {
     await prefs.remove('province');
     await prefs.remove(' municipality');
   }
-  */
 }

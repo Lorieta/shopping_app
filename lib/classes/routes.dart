@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:shopping_app/views/cart.dart';
 import 'package:shopping_app/views/content.dart';
-import 'package:shopping_app/views/deals.dart';
+import 'package:shopping_app/views/history.dart';
 import 'package:shopping_app/views/home.dart';
 import 'package:shopping_app/views/landing.dart';
 import 'package:shopping_app/views/login.dart';
@@ -32,7 +32,7 @@ class Routes {
         builder: (context, state, child) => Navbar(child: child),
         routes: [
           GoRoute(path: '/home', builder: (_, _) => const Home()),
-          GoRoute(path: '/deals', builder: (_, _) => const Deals()),
+          GoRoute(path: '/deals', builder: (_, _) => const History()),
           GoRoute(path: '/profile', builder: (_, _) => const Profile()),
           GoRoute(path: '/cart', builder: (_, _) => const ShoppingCart()),
         ],

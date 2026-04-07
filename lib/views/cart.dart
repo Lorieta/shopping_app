@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cartprovider.dart';
+import '../services/order_history_service.dart';
+import '../models/order_history.dart';
 
 class ShoppingCart extends StatelessWidget {
   const ShoppingCart({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final OrderHistoryService _order_service = OrderHistoryService();
+
     return Scaffold(
       appBar: AppBar(title: const Text('Shopping Cart')),
       body: Consumer<CartModel>(
@@ -184,7 +188,22 @@ class ShoppingCart extends StatelessWidget {
                         width: double.infinity,
                         height: 54,
                         child: FilledButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            for (var cartItem in items) {
+                              final order = OrderHistory(
+                                id: 0,
+                                item: cartItem.item,
+                                purchaseDate: DateTime.now(),
+                                quantity: cartItem.quantity,
+                              );
+                              final result = await _order_service.addHistory(
+                                order,
+                              );
+
+                              print(result);
+                            }
+                            cart.removeAll();
+                          },
                           child: const Text(
                             'Checkout',
                             style: TextStyle(fontSize: 18),

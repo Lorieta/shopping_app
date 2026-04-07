@@ -16,7 +16,7 @@ void main() async {
   final userProvider = UserProvider();
 
   final routes = Routes(
-    // initialLocation: userProvider.isLoggedIn ? '/home' : '/',
+    initialLocation: userProvider.isLoggedIn ? '/home' : '/',
   );
 
   runApp(

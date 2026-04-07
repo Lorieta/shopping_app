@@ -51,6 +51,13 @@ class DatabaseHelper {
       onCarousel INTEGER
     )
   ''');
+    await db.execute(''' 
+    CREATE TABLE orderHistoryTable (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      item TEXT NOT NULL,
+      purchaseDate TEXT NOT NULL,
+      quantity INTEGER NOT NULL)
+    ''');
 
     // batch insert (correct way)
     Batch batch = db.batch();

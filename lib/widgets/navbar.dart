@@ -9,7 +9,7 @@ class Navbar extends StatelessWidget {
 
   static const _tabs = [
     (path: '/home', icon: Icons.home_rounded, label: 'Home'),
-    (path: '/deals', icon: Icons.favorite_border_rounded, label: 'Wishlist'),
+    (path: '/deals', icon: Icons.history, label: 'Order History'),
     (path: '/cart', icon: Icons.shopping_bag_outlined, label: 'Cart'),
     (path: '/profile', icon: Icons.person_outline_rounded, label: 'Profile'),
   ];
