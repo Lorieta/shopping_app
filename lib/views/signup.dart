@@ -137,6 +137,7 @@ class _SignupState extends State<Signup> {
                       },
                     ),
                   ),
+
                   const SizedBox(height: 16),
                   CustomDropdownWrapper(
                     child: PhilippineProvinceDropdownView(
@@ -189,7 +190,32 @@ class _SignupState extends State<Signup> {
                   CustomPrimaryButton(
                     text: 'Create Account',
                     onPressed: () async {
-                      var user = User(
+                      if (!_formKey.currentState!.validate()) return;
+                      if (_selectedRegion == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Please select a region.'),
+                          ),
+                        );
+                        return;
+                      }
+                      if (_selectedProvince == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Please select a province.'),
+                          ),
+                        );
+                        return;
+                      }
+                      if (_selectedMunicipality == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Please select a municipality.'),
+                          ),
+                        );
+                        return;
+                      }
+                      final user = User(
                         username: _usernameController.text,
                         password: _passwordController.text,
                         firstName: _firstNameController.text,
@@ -198,34 +224,24 @@ class _SignupState extends State<Signup> {
                         province: _selectedProvince!.name,
                         municipality: _selectedMunicipality!.name,
                       );
-                      if (_formKey.currentState!.validate() &&
-                          _selectedRegion != null &&
-                          _selectedProvince != null &&
-                          _selectedMunicipality != null) {
-                        final success = await AuthService.registerUser(user);
 
-                        if (!context.mounted) return;
+                      final success = await AuthService.registerUser(user);
 
-                        if (success) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Account created successfully!'),
-                            ),
-                          );
-                          Navigator.pop(context);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Failed to create account. Please try again.',
-                              ),
-                            ),
-                          );
-                        }
+                      if (!context.mounted) return;
+
+                      if (success) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Account created successfully!'),
+                          ),
+                        );
+                        Navigator.pop(context);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Please fill all required fields.'),
+                            content: Text(
+                              'Failed to create account. Please try again.',
+                            ),
                           ),
                         );
                       }

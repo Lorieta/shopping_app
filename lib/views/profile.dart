@@ -86,7 +86,7 @@ class _ProfileState extends State<Profile> {
                   GestureDetector(
                     onTap: _pickImage,
                     child: CircleAvatar(
-                      radius: 48,
+                      radius: 80,
                       backgroundColor: colorScheme.surfaceContainerHighest,
                       backgroundImage: (imageFile != null)
                           ? FileImage(File(imageFile))
@@ -94,7 +94,7 @@ class _ProfileState extends State<Profile> {
                       child: (imageFile == null)
                           ? Icon(
                               Icons.person,
-                              size: 48,
+                              size: 80,
                               color: colorScheme.onSurface.withOpacity(0.4),
                             )
                           : null,

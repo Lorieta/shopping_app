@@ -1,6 +1,7 @@
 import 'package:shopping_app/models/order_history.dart';
 
 import '../classes/database.dart';
+import '../classes/logger.dart';
 
 class OrderHistoryService {
   final DatabaseHelper dbHelper = DatabaseHelper.instance;
@@ -11,7 +12,8 @@ class OrderHistoryService {
       await db.insert('orderHistoryTable', order.toMap());
       return true;
     } catch (err) {
-      rethrow;
+      AppLogger.logger.d('Error: $err');
+      return false;
     }
   }
 
@@ -25,7 +27,8 @@ class OrderHistoryService {
           .toList();
       return historylist;
     } catch (err) {
-      return null;
+      AppLogger.logger.d('Error: $err');
+      return [];
     }
   }
 }

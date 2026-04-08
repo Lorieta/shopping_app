@@ -12,7 +12,8 @@ class AuthService {
       await id.insert('users', user.toMap());
       return true;
     } catch (e) {
-      rethrow;
+      AppLogger.logger.d('Error: $e');
+      return false;
     }
   }
 
@@ -31,6 +32,7 @@ class AuthService {
         return User.fromMap(Map<String, dynamic>.from(result.first));
       }
     } catch (err) {
+      AppLogger.logger.d('Error: $err');
       return null;
     }
     return null;
@@ -63,6 +65,7 @@ class AuthService {
       );
       return count > 0;
     } catch (e) {
+      AppLogger.logger.d('Error: $e');
       return false;
     }
   }
@@ -74,6 +77,7 @@ class AuthService {
       final savedPassword = prefs.getString('password');
       return savedUsername != null && savedPassword != null;
     } catch (e) {
+      AppLogger.logger.d('Error: $e');
       return false;
     }
   }

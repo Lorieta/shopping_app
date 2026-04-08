@@ -104,7 +104,7 @@ class _ContentState extends State<Content> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Added $_quantity to cart'),
-                            behavior: SnackBarBehavior.floating,
+                            behavior: SnackBarBehavior.fixed,
                             duration: const Duration(seconds: 2),
                           ),
                         );

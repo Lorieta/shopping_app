@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/userprovider.dart';
@@ -21,7 +20,7 @@ class _HeaderState extends State<Header> {
     final userProvider = Provider.of<UserProvider>(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    String? _profilePic = userProvider.user?['profile_image_url']?.toString();
+
     String? _province = userProvider.user?['province']?.toString();
     String? _municipality = userProvider.user?['municipality']?.toString();
     return Stack(
@@ -48,20 +47,11 @@ class _HeaderState extends State<Header> {
                         width: 1,
                       ),
                     ),
-                    child: (_profilePic?.isNotEmpty == true)
-                        ? ClipOval(
-                            child: Image.file(
-                              File(_profilePic!),
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : Icon(
-                            Icons.location_on_outlined,
-                            color: colorScheme.onSurface.withOpacity(0.5),
-                            size: 20,
-                          ),
+                    child: Icon(
+                      Icons.location_on_outlined,
+                      color: colorScheme.onSurface.withOpacity(0.5),
+                      size: 40,
+                    ),
                   ),
 
                   const SizedBox(width: 12),

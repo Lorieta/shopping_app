@@ -15,9 +15,7 @@ class _Category extends State<Category> {
   @override
   void initState() {
     super.initState();
-    _categories = ApiService().getCategories().then(
-      (category) => category ?? [],
-    );
+    _categories = ApiService().getCategories().then((category) => category);
   }
 
   @override

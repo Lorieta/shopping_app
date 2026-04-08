@@ -93,7 +93,24 @@ class ShoppingCart extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             IconButton(
-                              onPressed: () => cart.removeItem(cartItem.item),
+                              onPressed: () => {
+                                cart.removeItem(cartItem.item),
+                                if (context.mounted)
+                                  {
+                                    // Best practice: check if widget is still in the tree
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Item Removed'),
+                                        backgroundColor: Color.fromARGB(
+                                          255,
+                                          255,
+                                          0,
+                                          0,
+                                        ),
+                                      ),
+                                    ),
+                                  },
+                              },
                               icon: Icon(
                                 Icons.delete_outline,
                                 color: Theme.of(context).colorScheme.error,
@@ -196,13 +213,18 @@ class ShoppingCart extends StatelessWidget {
                                 purchaseDate: DateTime.now(),
                                 quantity: cartItem.quantity,
                               );
-                              final result = await _order_service.addHistory(
-                                order,
-                              );
-
-                              print(result);
+                              await _order_service.addHistory(order);
                             }
                             cart.removeAll();
+                            if (context.mounted) {
+                              // Best practice: check if widget is still in the tree
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Orders placed successfully!'),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
                           },
                           child: const Text(
                             'Checkout',
