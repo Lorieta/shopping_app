@@ -39,11 +39,16 @@ class _HistoryState extends State<History> {
           itemCount: history.length,
           itemBuilder: (context, index) {
             final order = history[index];
-            return ListTile(
-              leading: Image.network(order.item.thumbnail),
-              title: Text(order.item.title),
-              subtitle: Text('\Php. ${order.item.price}'),
-              trailing: Text('x${order.quantity}'),
+            return Container(
+              child: Card(
+                child: ListTile(
+                  leading: Image.network(order.item.thumbnail),
+                  title: Text(order.item.title),
+                  subtitle: Text('\Php. ${order.item.price}'),
+                  trailing: Text('x${order.quantity}'),
+                  onTap: () => {},
+                ),
+              ),
             );
           },
         );
