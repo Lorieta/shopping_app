@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:shopping_app/classes/logger.dart';
 import 'package:shopping_app/providers/themeprovider.dart';
 import 'package:shopping_app/providers/userprovider.dart';
 import 'package:go_router/go_router.dart';
@@ -14,9 +15,24 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  @override
-  void initState() {
-    super.initState();
+  Future<void> _pickImage() async {
+    final returnedImage = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (returnedImage == null) {
+      AppLogger.logger.w('User closed the picker without selecting an image.');
+      return;
+    }
+
+    AppLogger.logger.d('Image picked: ${returnedImage.path}');
+
+    AppLogger.logger.d('Updating provider...');
+    await Provider.of<UserProvider>(
+      context,
+      listen: false,
+    ).updateProfilePic(returnedImage.path);
+    AppLogger.logger.d('Provider update complete.');
   }
 
   @override
@@ -24,7 +40,15 @@ class _ProfileState extends State<Profile> {
     final colorScheme = Theme.of(context).colorScheme;
     final userProvider = Provider.of<UserProvider>(context);
     ThemeProvider _themeProvider = Provider.of<ThemeProvider>(context);
-    String? imageFile = userProvider.user?['profilepic']?.toString();
+
+    final imageFileRaw =
+        (userProvider.user?['profile_image_url'] ??
+                userProvider.user?['profileImageUrl'])
+            ?.toString();
+    final String? imageFile =
+        (imageFileRaw == null || imageFileRaw.trim().isEmpty)
+        ? null
+        : imageFileRaw;
     String? firstName = userProvider.user?['firstName']?.toString();
 
     String? lastName = userProvider.user?['lastName']?.toString();
@@ -59,19 +83,22 @@ class _ProfileState extends State<Profile> {
                   ),
                   const SizedBox(height: 16),
                   // Profile Icon
-                  CircleAvatar(
-                    radius: 48,
-                    backgroundColor: colorScheme.surfaceContainerHighest,
-                    backgroundImage: imageFile != null
-                        ? FileImage(File(imageFile))
-                        : null,
-                    child: imageFile == null
-                        ? Icon(
-                            Icons.person,
-                            size: 48,
-                            color: colorScheme.onSurface.withOpacity(0.4),
-                          )
-                        : null,
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: CircleAvatar(
+                      radius: 48,
+                      backgroundColor: colorScheme.surfaceContainerHighest,
+                      backgroundImage: (imageFile != null)
+                          ? FileImage(File(imageFile))
+                          : null,
+                      child: (imageFile == null)
+                          ? Icon(
+                              Icons.person,
+                              size: 48,
+                              color: colorScheme.onSurface.withOpacity(0.4),
+                            )
+                          : null,
+                    ),
                   ),
 
                   Text(
@@ -79,50 +106,11 @@ class _ProfileState extends State<Profile> {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Text('@$username'),
+                  const SizedBox(width: 12),
                 ],
               ),
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 10),
-                  child: Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: colorScheme.onPrimary,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Column(children: [Text("Total Orders")]),
-                  ),
-                ),
 
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 10),
-                  child: Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: colorScheme.onPrimary,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Column(children: [Text("Total Orders")]),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 10),
-                  child: Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: colorScheme.onPrimary,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Column(children: [Text("Total Orders")]),
-                  ),
-                ),
-              ],
-            ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(

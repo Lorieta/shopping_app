@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:collection/collection.dart';
+import 'package:shopping_app/classes/logger.dart';
 import '../models/item.dart';
+import 'package:logger/logger.dart';
 
 class CartItem {
   final Item item;
@@ -19,15 +21,19 @@ class CartModel extends ChangeNotifier {
 
   // Add item to cart
   void addItems(Item item, int quantity) {
-    final existing = _items.firstWhereOrNull((i) => i.item.id == item.id);
+    try {
+      final existing = _items.firstWhereOrNull((i) => i.item.id == item.id);
 
-    if (existing != null) {
-      existing.quantity += quantity;
-    } else {
-      _items.add(CartItem(item: item, quantity: quantity));
+      if (existing != null) {
+        existing.quantity += quantity;
+      } else {
+        _items.add(CartItem(item: item, quantity: quantity));
+      }
+
+      notifyListeners();
+    } on Exception catch (e) {
+      AppLogger.logger.d(e);
     }
-
-    notifyListeners();
   }
 
   // Update quantity

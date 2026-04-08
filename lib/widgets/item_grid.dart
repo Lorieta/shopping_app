@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/item.dart';
-import '../services/items_service.dart';
+import '../services/api_service.dart';
 import 'card.dart';
 
 class ItemGrid extends StatefulWidget {
@@ -16,7 +16,7 @@ class _ItemGridState extends State<ItemGrid> {
   @override
   void initState() {
     super.initState();
-    _allItems = ItemService().fetchData().then((items) => items ?? []);
+    _allItems = ApiService().fetchData().then((items) => items ?? []);
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import '../classes/database.dart';
 import '../models/user.dart';
+import '../classes/logger.dart';
 
 class AuthService {
   static DatabaseHelper dbHelper = DatabaseHelper.instance;
@@ -46,7 +47,23 @@ class AuthService {
       }
       return null;
     } catch (e) {
+      AppLogger.logger.d('Error: $e');
       return null;
+    }
+  }
+
+  static Future<bool> updateUser(int id, Map<String, dynamic> data) async {
+    try {
+      final db = await dbHelper.database;
+      int count = await db.update(
+        'users',
+        data,
+        where: 'id=?',
+        whereArgs: [id],
+      );
+      return count > 0;
+    } catch (e) {
+      return false;
     }
   }
 

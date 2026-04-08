@@ -57,6 +57,25 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> updateProfilePic(String imagePath) async {
+    if (_id == null) return;
+
+    // Optimistically update local state so UI updates immediately and persists
+    // even if the user navigates away before the server refresh completes.
+    _user ??= <String, dynamic>{};
+    _user!['profile_image_url'] = imagePath;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user', jsonEncode(_user));
+    notifyListeners();
+
+    bool success = await AuthService.updateUser(_id!, {
+      'profile_image_url': imagePath,
+    });
+    if (success) {
+      await getinfo(_id!);
+    }
+  }
+
   Future<void> restoreSession() async {
     final pref = await SharedPreferences.getInstance();
     final savedId = pref.getInt('id');

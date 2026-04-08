@@ -40,7 +40,6 @@ class _HeaderState extends State<Header> {
                 children: [
                   // Avatar circle
                   Container(
-                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: colorScheme.surface,
                       shape: BoxShape.circle,
@@ -48,20 +47,13 @@ class _HeaderState extends State<Header> {
                         color: colorScheme.outline.withOpacity(0.2),
                         width: 1,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: colorScheme.shadow.withOpacity(0.02),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
                     ),
                     child: (_profilePic?.isNotEmpty == true)
                         ? ClipOval(
                             child: Image.file(
                               File(_profilePic!),
-                              width: 40,
-                              height: 40,
+                              width: 50,
+                              height: 50,
                               fit: BoxFit.cover,
                             ),
                           )
