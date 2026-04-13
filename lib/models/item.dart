@@ -1,46 +1,39 @@
 class Item {
   const Item({
     required this.id,
-    required this.name,
-    required this.type,
-    required this.image,
+    required this.title,
     required this.price,
+    required this.thumbnail,
     required this.description,
-    this.onCarousel = false,
+    required this.category,
   });
 
-  final String id;
-  final String name;
-  final String type;
-  final String image;
+  final int id;
+  final String title;
   final double price;
+  final String thumbnail;
   final String description;
-  final bool onCarousel;
+  final String category;
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'name': name,
-      'type': type,
-      'image': image,
+      'title': title,
       'price': price,
+      'thumbnail': thumbnail,
       'description': description,
-      'onCarousel': onCarousel,
+      'category': category,
     };
   }
 
-  factory Item.fromMap(Map<String, dynamic> map) {
+  factory Item.fromJson(Map<String, dynamic> map) {
     return Item(
-      id: map['itemId']?.toString() ?? map['id']?.toString() ?? '',
-      name: map['itemName']?.toString() ?? map['name']?.toString() ?? '',
-      type: map['itemType']?.toString() ?? map['type']?.toString() ?? '',
-      image: map['itemImage']?.toString() ?? map['image']?.toString() ?? '',
-      price: (map['itemPrice'] ?? map['price'] ?? 0).toDouble(),
-      description:
-          map['itemDescription']?.toString() ??
-          map['description']?.toString() ??
-          '',
-      onCarousel: (map['onCarousel'] ?? 0) == 1 || map['onCarousel'] == true,
+      id: map['id'] as int,
+      title: map['title'] as String,
+      price: map['price'] as double,
+      thumbnail: map['thumbnail'] as String,
+      description: map['description'] as String,
+      category: map['category'] as String,
     );
   }
 }

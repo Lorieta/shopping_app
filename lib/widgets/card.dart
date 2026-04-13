@@ -20,11 +20,11 @@ class HeroLayoutCard extends StatelessWidget {
           fit: StackFit.expand,
           children: <Widget>[
             Image.network(
-              itemInfo.image,
+              itemInfo.thumbnail,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return const Center(
-                  child: Icon(Icons.broken_image, size: 48, color: Colors.grey),
+                  child: Icon(Icons.broken_image, size: 36, color: Colors.grey),
                 );
               },
             ),
@@ -46,34 +46,27 @@ class HeroLayoutCard extends StatelessWidget {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+
                   children: [
                     Text(
-                      itemInfo.name,
+                      itemInfo.title,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 4),
+                    Divider(),
+
                     Text(
-                      itemInfo.type,
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.8),
-                        fontSize: 14,
+                      'Php ${itemInfo.price.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        color: Colors.greenAccent,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    if (itemInfo.onCarousel == false)
-                      Text(
-                        'Php ${itemInfo.price.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          color: Colors.greenAccent,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
                   ],
                 ),
               ),

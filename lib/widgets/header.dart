@@ -1,8 +1,5 @@
-import 'dart:io';
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_app/providers/themeprovider.dart';
 import '../providers/userprovider.dart';
 
 class Header extends StatefulWidget {
@@ -21,12 +18,11 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-    ThemeProvider _themeProvider = Provider.of<ThemeProvider>(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    String? _profilePic = userProvider.user?['profile_image_url']?.toString();
-    String? _province = userProvider.user?['province']?.toString();
-    String? _municipality = userProvider.user?['municipality']?.toString();
+
+    String? province = userProvider.user?['province']?.toString();
+    String? municipality = userProvider.user?['municipality']?.toString();
     return Stack(
       children: [
         // Background / base layer (optional — add color or image here)
@@ -43,7 +39,6 @@ class _HeaderState extends State<Header> {
                 children: [
                   // Avatar circle
                   Container(
-                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: colorScheme.surface,
                       shape: BoxShape.circle,
@@ -51,28 +46,12 @@ class _HeaderState extends State<Header> {
                         color: colorScheme.outline.withOpacity(0.2),
                         width: 1,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: colorScheme.shadow.withOpacity(0.02),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
                     ),
-                    child: (_profilePic?.isNotEmpty == true)
-                        ? ClipOval(
-                            child: Image.file(
-                              File(_profilePic!),
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : Icon(
-                            Icons.location_on_outlined,
-                            color: colorScheme.onSurface.withOpacity(0.5),
-                            size: 20,
-                          ),
+                    child: Icon(
+                      Icons.location_on_outlined,
+                      color: colorScheme.onSurface.withOpacity(0.5),
+                      size: 40,
+                    ),
                   ),
 
                   const SizedBox(width: 12),
@@ -90,7 +69,7 @@ class _HeaderState extends State<Header> {
                         ),
                       ),
                       Text(
-                        '${_province ?? 'Unknown'}, ${_municipality ?? ''}',
+                        '${province ?? 'Unknown'}, ${municipality ?? ''}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: colorScheme.onSurface,

@@ -29,7 +29,7 @@ class _ContentState extends State<Content> {
 
           children: [
             Image.network(
-              widget.item.image,
+              widget.item.thumbnail,
               width: double.infinity,
               height: 320,
               fit: BoxFit.cover,
@@ -59,7 +59,7 @@ class _ContentState extends State<Content> {
                     ),
                   ),
                   Text(
-                    widget.item.name,
+                    widget.item.title,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -104,7 +104,7 @@ class _ContentState extends State<Content> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Added $_quantity to cart'),
-                            behavior: SnackBarBehavior.floating,
+                            behavior: SnackBarBehavior.fixed,
                             duration: const Duration(seconds: 2),
                           ),
                         );

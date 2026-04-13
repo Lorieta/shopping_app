@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cartprovider.dart';
+import '../services/order_history_service.dart';
+import '../models/order_history.dart';
 
 class ShoppingCart extends StatelessWidget {
   const ShoppingCart({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final OrderHistoryService order_service = OrderHistoryService();
+
     return Scaffold(
       appBar: AppBar(title: const Text('Shopping Cart')),
       body: Consumer<CartModel>(
@@ -42,11 +46,11 @@ class ShoppingCart extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.network(
-                            cartItem.item.image,
+                            cartItem.item.thumbnail,
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Container(
+                            errorBuilder: (_, _, _) => Container(
                               width: 80,
                               height: 80,
                               color: Theme.of(context)
@@ -68,7 +72,7 @@ class ShoppingCart extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                cartItem.item.name,
+                                cartItem.item.title,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -76,7 +80,7 @@ class ShoppingCart extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                '\Php. ${cartItem.item.price.toStringAsFixed(2)}',
+                                'Php. ${cartItem.item.price.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w600,
@@ -89,7 +93,24 @@ class ShoppingCart extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             IconButton(
-                              onPressed: () => cart.removeItem(cartItem.item),
+                              onPressed: () => {
+                                cart.removeItem(cartItem.item),
+                                if (context.mounted)
+                                  {
+                                    // Best practice: check if widget is still in the tree
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Item Removed'),
+                                        backgroundColor: Color.fromARGB(
+                                          255,
+                                          255,
+                                          0,
+                                          0,
+                                        ),
+                                      ),
+                                    ),
+                                  },
+                              },
                               icon: Icon(
                                 Icons.delete_outline,
                                 color: Theme.of(context).colorScheme.error,
@@ -170,7 +191,7 @@ class ShoppingCart extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '\Php. ${cart.totalPrice.toStringAsFixed(2)}',
+                            'Php. ${cart.totalPrice.toStringAsFixed(2)}',
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -184,7 +205,27 @@ class ShoppingCart extends StatelessWidget {
                         width: double.infinity,
                         height: 54,
                         child: FilledButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            for (var cartItem in items) {
+                              final order = OrderHistory(
+                                id: 0,
+                                item: cartItem.item,
+                                purchaseDate: DateTime.now(),
+                                quantity: cartItem.quantity,
+                              );
+                              await order_service.addHistory(order);
+                            }
+                            cart.removeAll();
+                            if (context.mounted) {
+                              // Best practice: check if widget is still in the tree
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Orders placed successfully!'),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          },
                           child: const Text(
                             'Checkout',
                             style: TextStyle(fontSize: 18),
