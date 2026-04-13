@@ -39,7 +39,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final userProvider = Provider.of<UserProvider>(context);
-    ThemeProvider _themeProvider = Provider.of<ThemeProvider>(context);
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
 
     final imageFileRaw =
         (userProvider.user?['profile_image_url'] ??
@@ -123,16 +123,13 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        children: [Icon(Icons.account_circle), Text('Profile')],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        children: [Icon(Icons.settings), Text('Settings')],
+                    GestureDetector(
+                      onTap: () => context.push('/settings'),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
+                          children: [Icon(Icons.settings), Text('Settings')],
+                        ),
                       ),
                     ),
 
@@ -142,7 +139,7 @@ class _ProfileState extends State<Profile> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Icon(
-                            _themeProvider.currentTheme == ThemeEnum.Dark
+                            themeProvider.currentTheme == ThemeEnum.Dark
                                 ? Icons.dark_mode
                                 : Icons.light_mode,
                           ),
@@ -153,9 +150,9 @@ class _ProfileState extends State<Profile> {
                             alignment: Alignment.centerRight,
                             child: Switch(
                               value:
-                                  _themeProvider.currentTheme == ThemeEnum.Dark,
+                                  themeProvider.currentTheme == ThemeEnum.Dark,
                               onChanged: (isDark) {
-                                _themeProvider.changeTheme(
+                                themeProvider.changeTheme(
                                   isDark ? ThemeEnum.Dark : ThemeEnum.Light,
                                 );
                               },

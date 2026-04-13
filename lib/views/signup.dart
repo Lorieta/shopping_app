@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:philippines_rpcmb/philippines_rpcmb.dart';
 import 'package:shopping_app/models/user.dart';
-import '../services/auth.dart';
+import '../services/auth_service.dart';
 import '../widgets/forms.dart';
 
 class Signup extends StatefulWidget {

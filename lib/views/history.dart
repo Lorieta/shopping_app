@@ -44,7 +44,7 @@ class _HistoryState extends State<History> {
                 child: ListTile(
                   leading: Image.network(order.item.thumbnail),
                   title: Text(order.item.title),
-                  subtitle: Text('\Php. ${order.item.price}'),
+                  subtitle: Text('Php. ${order.item.price}'),
                   trailing: Text('x${order.quantity}'),
                   onTap: () => {},
                 ),

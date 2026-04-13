@@ -9,7 +9,7 @@ class ShoppingCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final OrderHistoryService _order_service = OrderHistoryService();
+    final OrderHistoryService order_service = OrderHistoryService();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Shopping Cart')),
@@ -50,7 +50,7 @@ class ShoppingCart extends StatelessWidget {
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Container(
+                            errorBuilder: (_, _, _) => Container(
                               width: 80,
                               height: 80,
                               color: Theme.of(context)
@@ -80,7 +80,7 @@ class ShoppingCart extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                '\Php. ${cartItem.item.price.toStringAsFixed(2)}',
+                                'Php. ${cartItem.item.price.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w600,
@@ -191,7 +191,7 @@ class ShoppingCart extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '\Php. ${cart.totalPrice.toStringAsFixed(2)}',
+                            'Php. ${cart.totalPrice.toStringAsFixed(2)}',
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -213,7 +213,7 @@ class ShoppingCart extends StatelessWidget {
                                 purchaseDate: DateTime.now(),
                                 quantity: cartItem.quantity,
                               );
-                              await _order_service.addHistory(order);
+                              await order_service.addHistory(order);
                             }
                             cart.removeAll();
                             if (context.mounted) {

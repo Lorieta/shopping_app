@@ -35,7 +35,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final GoRouter router;
 
-  MyApp({Key? key, required this.router}) : super(key: key);
+  const MyApp({super.key, required this.router});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

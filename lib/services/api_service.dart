@@ -10,14 +10,36 @@ class ApiService {
 
   Future<List<Item>> fetchData() async {
     try {
-      final String url =
-          'https://dummyjson.com/products?limit=30&skip=0&select=title,price,thumbnail,description,image,category';
-      final response = await client.get(Uri.parse(url));
-      final List<dynamic> request = jsonDecode(response.body)['products'];
+      // 1. Define your target categories
+      final List<String> categories = [
+        'laptops',
+        'smartphones',
+        'tablets',
+        'mobile-accessories',
+      ];
 
-      List<Item> itemlist = request
-          .map((itemMap) => Item.fromJson(itemMap as Map<String, dynamic>))
-          .toList();
+      List<Item> itemlist = [];
+
+      // 2. Loop through each category and fetch data
+      for (String category in categories) {
+        final String url =
+            'https://dummyjson.com/products/category/$category?select=title,price,thumbnail,description,image,category';
+
+        final response = await client.get(Uri.parse(url));
+
+        if (response.statusCode == 200) {
+          final List<dynamic> productsJson = jsonDecode(
+            response.body,
+          )['products'];
+
+          // 3. Map and add to our master list
+          final List<Item> categoryItems = productsJson
+              .map((itemMap) => Item.fromJson(itemMap as Map<String, dynamic>))
+              .toList();
+
+          itemlist.addAll(categoryItems);
+        }
+      }
 
       return itemlist;
     } on Exception catch (e) {

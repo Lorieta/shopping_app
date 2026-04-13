@@ -21,8 +21,8 @@ class _HeaderState extends State<Header> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    String? _province = userProvider.user?['province']?.toString();
-    String? _municipality = userProvider.user?['municipality']?.toString();
+    String? province = userProvider.user?['province']?.toString();
+    String? municipality = userProvider.user?['municipality']?.toString();
     return Stack(
       children: [
         // Background / base layer (optional — add color or image here)
@@ -69,7 +69,7 @@ class _HeaderState extends State<Header> {
                         ),
                       ),
                       Text(
-                        '${_province ?? 'Unknown'}, ${_municipality ?? ''}',
+                        '${province ?? 'Unknown'}, ${municipality ?? ''}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: colorScheme.onSurface,
